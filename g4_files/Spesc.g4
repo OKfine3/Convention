@@ -133,62 +133,64 @@ timePredicateOperator : ( BEFORE | AFTER );
 isOrNot : ('is' | 'isn\'t');
 /***************************** time logical ************************************/
 
-///***************************expression definition************************************/
-//// 赋值表达式（最低优先级）
+/***************************expression definition************************************/
+/*// 赋值表达式（最低优先级）
+assignmentExpression
+    : logicalOrExpression   # Expr
+//    | IDENTIFIER ('+=' | '-=' | '*=' | '/=') logicalOrExpression  # CompoundAssign
+    | IDENTIFIER '=' logicalOrExpression        # Assign  // 直接使用逻辑或表达式（无赋值）
+    ;
 //assignmentExpression
-//    : logicalOrExpression   # Expr
+//    : IDENTIFIER '=' logicalOrExpression        # Assign
 ////    | IDENTIFIER ('+=' | '-=' | '*=' | '/=') logicalOrExpression  # CompoundAssign
-//    | IDENTIFIER '=' logicalOrExpression        # Assign  // 直接使用逻辑或表达式（无赋值）
+//    | logicalOrExpression   # Expr  // 直接使用逻辑或表达式（无赋值）
 //    ;
-////assignmentExpression
-////    : IDENTIFIER '=' logicalOrExpression        # Assign
-//////    | IDENTIFIER ('+=' | '-=' | '*=' | '/=') logicalOrExpression  # CompoundAssign
-////    | logicalOrExpression   # Expr  // 直接使用逻辑或表达式（无赋值）
-////    ;
-//
-//
-//// 逻辑或表达式
-//logicalOrExpression
-//    : logicalAndExpression (('or' | '||') logicalAndExpression)*  # LogicalOr
-//    ;
-//
-//// 逻辑与表达式
-//logicalAndExpression
-//    : equalityExpression (('and' | '&&') equalityExpression)*  # LogicalAnd
-//    ;
-//
-//// 关系表达式（相等、不等）
-//equalityExpression
-//    : relationExpression (('==' | '!=') relationExpression)*  # Equality
-//    ;
-//
-//// 关系表达式（比较大小）
-//relationExpression
-//    : additiveExpression (('<' | '<=' | '>' | '>=') additiveExpression)*  # Relational
-//    ;
-//
-//// 加法 / 减法
-//additiveExpression
-//    : multiplicativeExpression (('+' | '-') multiplicativeExpression)*  # Additive
-//    ;
-//
-//// 乘法 / 除法 / 取模
-//multiplicativeExpression
-//    : unaryExpression (('*' | '/' | '%') unaryExpression)*   # Multiplicative
-//    ;
-//
-//// 一元运算（负号、逻辑非）
-//unaryExpression
-//    : ('-' | '!') unaryExpression  # UnaryOp
-//    | primaryExpression            # UnaryExpr
-//    ;
-//
-//// 基础表达式（括号、变量、常量）
-//primaryExpression
-//    : '(' assignmentExpression ')'   # ParenExpr
-//    | value                          # VarExpr
-//    ;
-///***************************expression definition************************************/
+
+
+// 逻辑或表达式
+logicalOrExpression
+    : logicalAndExpression (('or' | '||') logicalAndExpression)*  # LogicalOr
+    ;
+
+// 逻辑与表达式
+logicalAndExpression
+    : equalityExpression (('and' | '&&') equalityExpression)*  # LogicalAnd
+    ;
+
+// 关系表达式（相等、不等）
+equalityExpression
+    : relationExpression (('==' | '!=') relationExpression)*  # Equality
+    ;
+
+// 关系表达式（比较大小）
+relationExpression
+    : additiveExpression (('<' | '<=' | '>' | '>=') additiveExpression)*  # Relational
+    ;
+
+// 加法 / 减法
+additiveExpression
+    : multiplicativeExpression (('+' | '-') multiplicativeExpression)*  # Additive
+    ;
+
+// 乘法 / 除法 / 取模
+multiplicativeExpression
+    : unaryExpression (('*' | '/' | '%') unaryExpression)*   # Multiplicative
+    ;
+
+// 一元运算（负号、逻辑非）
+unaryExpression
+    : ('-' | '!') unaryExpression  # UnaryOp
+    | primaryExpression            # UnaryExpr
+    ;
+
+// 基础表达式（括号、变量、常量）
+primaryExpression
+    : '(' assignmentExpression ')'   # ParenExpr
+    | value                          # VarExpr
+    ;*/
+/***************************expression definition************************************/
+
+
 /***************************expression definition************************************/
 // 逻辑或表达式
 logicalOrExpression
@@ -302,12 +304,12 @@ breachClauseDeclaration :BREACH CLAUSE index COLON partyName (canExerciseRight |
 
 //legal right
 legalRight :legalRightDeclaration rightContent;
-legalRightDeclaration : rightOf rightName UNDER NUMBER+ ;
+legalRightDeclaration : rightOf rightName UNDER IDENTIFIER+ COLON;
 rightContent : rightSubject rightObject lawSource;
 rightSubject : partyName possessTheRight (INCLUDING '['rightName (',' rightName)*']')?;
 possessTheRight : 'possess' 'the' 'right';
 
-rightObject : onTheObject INCLUDING rightName+;
+rightObject : onTheObject INCLUDING '[' assetName (',' assetName)* ']' ;
 onTheObject : 'on' 'the' 'object';
 
 lawSource : accordTo lawName+;
@@ -397,6 +399,7 @@ DECLARATION : 'declaration';
 DETAILS : 'Contract conclusion' ( options {greedy=false;} : . )*?'{';
 CONSTRAINT_BY : 'constraint_by';
 INCLUDING : 'including';
+UNDER : 'under';
 
 /* Type Value Tokens */
 INDEX : 'no'NUMBER ;

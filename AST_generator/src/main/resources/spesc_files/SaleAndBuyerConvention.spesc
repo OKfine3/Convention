@@ -21,6 +21,12 @@ convention SaleAndBuyConvention{
 		latePaid:Money
 	}
 
+    legalRight of ownershipRight under Art240:
+        Seller possess the right including [possessRight, useRight, usufructRight, desposeRight]
+        on the object including [immoAvableProperty, movableProperty]
+        according to Civil Code of the People's Republic of China
+
+
     @@条款1:约束条款
     bind clause no1:
         downPayment <= price * 20
