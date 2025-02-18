@@ -1,0 +1,68 @@
+convention SaleAndBuyConvention{
+    party Buyer{
+        account:Integer
+    }
+    party Seller{
+        account:Integer
+    }
+
+    asset Goods{
+        advance:Money
+        deliverDate:Date
+        amount:Integer
+    }
+
+	addition infos{
+		startTime:Date
+		payDate:Date
+		payAdvanceDate:Date
+		confirmDate:Date
+		returnDate:Date
+		latePaid:Money
+	}
+
+    @@条款1:约束条款
+    bind clause no1:
+        downPayment <= price * 20
+        Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, HumanOrgans]
+
+	@@条款2：买受人可以开始购买货物
+    clause no2:Buyer can exercise right buyGoods
+
+    @@条款3:买受人必须支付预付款
+	clause no3:Buyer must fulfil obligation payAdvance
+		when after Buyer did buyGoods and before payAdvanceDate
+		while deposit advance
+
+	@@条款4：出卖人须在买方付款后，交付日期之前交付货物
+    clause no4:Seller must fulfil obligation deliverGoods
+		when before deliverDate and after Buyer did payAdvance
+		while transfer $goodsRight to Buyer
+
+    @@条款5：买受人在收到货物后，确认收货日期前，并且未申请退款，需要确认收货并支付余款(when条件有些问题)
+    clause no5:Buyer must fulfil obligation confirmReceiveAndPayBalance
+		when after Seller did deliverGoods and before confirmDate
+		while deposit balance
+
+	@@条款6：买方可以申请退款(私约中缺失)
+	clause no6:Buyer can exercise right requireRefund
+		when after Seller did deliverGoods and before confirmDate
+
+	@@条款7：买方申请退款后，必须在一定时间内退回物品（顺应缺失,是需要与clause no5相关联出现的条款）
+	clause no7:Buyer must fulfil obligation returnGoods
+		when after Buyer did requireRefund and before returnDate
+		while transfer $goodsRight to Seller
+
+	@@条款8：出卖方在买受方退货后必须退款
+	clause no8:Seller must fulfil obligation refund
+		when after Buyer did returnGoods
+		while transfer advance to Buyer
+
+
+    implement declaration{
+       Enacting Agency:Beijing,
+       Enactment Date:2024-01-01 00:00:00,
+       Implementation Date:2024-01-02  00:00:00
+    }
+}
+

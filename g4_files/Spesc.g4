@@ -30,7 +30,7 @@ contractBody :
 party : comment* (PARTY partyName '{' field* '}' | PARTY GROUP partyName '{' field* '}');
 
 //asset definition
-asset : comment* ASSET assetName '{' info? right? '}' ; // property*  property : (',')? propertyName '=' (BoolValue); //性质
+asset : comment* ASSET assetName '{' info? right? field*'}' ; // property*  property : (',')? propertyName '=' (BoolValue); //性质
 
 field :comment* name COLON (type | value | array | jsonObject) ;
 addition: ADDITION additionName '{' field* '}';
@@ -66,6 +66,7 @@ signature : SIGNATURE 'of'(PARTY | GROUP) IDENTIFIER COLON
 	    'date' COLON (type | RULE_DATE)?
 	'}'
 ;
+RULE_DATE : NUMBER '/' NUMBER '/' NUMBER;
 /***************************contract definition************************************/
 
 /***************************rule of action************************************/
@@ -78,8 +79,8 @@ parameter : IDENTIFIER (: type)? ;
 /***************************when/while/where************************************/
 whenStatement : WHEN predicate ;
 whileStatement : WHILE transferOperation ('and' transferOperation)*;
-//whereStatement : WHERE  ((logicalOrExpression? ('join' relationalExpression)?) | (relationalExpression? ('join' logicalOrExpression)? )) ;
 whereStatement : WHERE  ((logicalOrExpression? ('join' relationalExpression)?) | (relationalExpression? ('join' logicalOrExpression)? )) ;
+//whereStatement : WHERE  ((assignmentExpression? ('join' relationalExpression)?) | (relationalExpression? ('join' assignmentExpression)? )) ;
 
 
 predicate : relationalExpression (logicalOperator relationalExpression )?;
@@ -121,7 +122,7 @@ termDuty : DID;
 actionMultiplicity:( ALL | ANY | SOME | THIS | THE);
 
 // 全局查询 查询和智能合约运行相关的时间数值
- timeQueryOperator : ( op='now' ) | ( (op='start'  | op='end' ) 'of' IDENTIFIER) | IDENTIFIER;
+ timeQueryOperator : ( (op='start'  | op='end' ) 'of' IDENTIFIER) | IDENTIFIER;
 // timeQueryOperator :  ( (op='start'  | op='end' ) 'of' IDENTIFIER) | IDENTIFIER;
 
 addTimeConstant : (additiveOperator timeConstant);
@@ -132,56 +133,94 @@ timePredicateOperator : ( BEFORE | AFTER );
 isOrNot : ('is' | 'isn\'t');
 /***************************** time logical ************************************/
 
+///***************************expression definition************************************/
+//// 赋值表达式（最低优先级）
+//assignmentExpression
+//    : logicalOrExpression   # Expr
+////    | IDENTIFIER ('+=' | '-=' | '*=' | '/=') logicalOrExpression  # CompoundAssign
+//    | IDENTIFIER '=' logicalOrExpression        # Assign  // 直接使用逻辑或表达式（无赋值）
+//    ;
+////assignmentExpression
+////    : IDENTIFIER '=' logicalOrExpression        # Assign
+//////    | IDENTIFIER ('+=' | '-=' | '*=' | '/=') logicalOrExpression  # CompoundAssign
+////    | logicalOrExpression   # Expr  // 直接使用逻辑或表达式（无赋值）
+////    ;
+//
+//
+//// 逻辑或表达式
+//logicalOrExpression
+//    : logicalAndExpression (('or' | '||') logicalAndExpression)*  # LogicalOr
+//    ;
+//
+//// 逻辑与表达式
+//logicalAndExpression
+//    : equalityExpression (('and' | '&&') equalityExpression)*  # LogicalAnd
+//    ;
+//
+//// 关系表达式（相等、不等）
+//equalityExpression
+//    : relationExpression (('==' | '!=') relationExpression)*  # Equality
+//    ;
+//
+//// 关系表达式（比较大小）
+//relationExpression
+//    : additiveExpression (('<' | '<=' | '>' | '>=') additiveExpression)*  # Relational
+//    ;
+//
+//// 加法 / 减法
+//additiveExpression
+//    : multiplicativeExpression (('+' | '-') multiplicativeExpression)*  # Additive
+//    ;
+//
+//// 乘法 / 除法 / 取模
+//multiplicativeExpression
+//    : unaryExpression (('*' | '/' | '%') unaryExpression)*   # Multiplicative
+//    ;
+//
+//// 一元运算（负号、逻辑非）
+//unaryExpression
+//    : ('-' | '!') unaryExpression  # UnaryOp
+//    | primaryExpression            # UnaryExpr
+//    ;
+//
+//// 基础表达式（括号、变量、常量）
+//primaryExpression
+//    : '(' assignmentExpression ')'   # ParenExpr
+//    | value                          # VarExpr
+//    ;
+///***************************expression definition************************************/
 /***************************expression definition************************************/
-// 赋值表达式（最低优先级）
-assignmentExpression
-    : IDENTIFIER '=' logicalOrExpression        # Assign
-    | IDENTIFIER ('+=' | '-=' | '*=' | '/=') logicalOrExpression  # CompoundAssign
-    | logicalOrExpression   # Expr  // 直接使用逻辑或表达式（无赋值）
-    ;
-
 // 逻辑或表达式
 logicalOrExpression
-    : logicalAndExpression (('or' | '||') logicalAndExpression)*  # LogicalOr
+    : logicalAndExpression (('or' | '||') logicalAndExpression)*
     ;
 
 // 逻辑与表达式
 logicalAndExpression
-    : equalityExpression (('and' | '&&') equalityExpression)*  # LogicalAnd
+    : childExpression (('and' | '&&') childExpression)*
     ;
 
-// 关系表达式（相等、不等）
-equalityExpression
-    : relationExpression (('==' | '!=') relationExpression)*  # Equality
-    ;
+childExpression :
+    assignment_expression
+    | relational_expression
+    | arithmetic_expression
+;
 
-// 关系表达式（比较大小）
-relationExpression
-    : additiveExpression (('<' | '<=' | '>' | '>=') additiveExpression)*  # Relational
-    ;
+//赋值表达式
+assignment_expression : IDENTIFIER '=' childExpression;
 
-// 加法 / 减法
-additiveExpression
-    : multiplicativeExpression (('+' | '-') multiplicativeExpression)*  # Additive
-    ;
+relational_expression : arithmetic_expression (relationOperator arithmetic_expression)?;
 
-// 乘法 / 除法 / 取模
-multiplicativeExpression
-    : unaryExpression (('*' | '/' | '%') unaryExpression)*   # Multiplicative
-    ;
+// 算数表达式定义，优先级高低
+arithmetic_expression : addSubExpression ;
 
-// 一元运算（负号、逻辑非）
-unaryExpression
-    : ('-' | '!') unaryExpression  # UnaryOp
-    | primaryExpression            # UnaryExpr
-    ;
+addSubExpression : mulDivExpression (('+' | '-') mulDivExpression)* ;
 
-// 基础表达式（括号、变量、常量）
-primaryExpression
-    : '(' assignmentExpression ')'   # ParenExpr
-    | value                          # VarExpr
-    ;
+mulDivExpression : primaryExpression (('*' | '/') primaryExpression)* ;
+
+primaryExpression : value | '(' arithmetic_expression ')' ;
 /***************************expression definition************************************/
+
 
 /***************************** comparative relation ************************************/
 comparativeRelationExpression : (
@@ -241,7 +280,10 @@ PERCENTAGE : ([0-9.]+)[ ]* '%';
 /*************************************convention definition**********************************************/
 clause : comment* ( bindClause | generalClause | breachClause );
 //bind clause
-bindClause : BIND CLAUSE index COLON assignmentExpression* factorBind*;
+
+//bindClause : BIND CLAUSE index COLON assignmentExpression* factorBind*;
+bindClause : BIND CLAUSE index COLON childExpression* factorBind*;
+
 factorBind : factor lo_type itemLimitation;
 lo_type : ( 'IN' | 'NOT_IN');
 factor : partyName | assetName;
