@@ -1,0 +1,57 @@
+contract SaleAndBuyContract constraint_by SaleAndBuyConvention{
+		party Seller{
+				account : 100
+		}
+		party Buyer{
+				account : 100
+		}
+
+        asset Meat{
+			quantity : 101
+			price : 101
+		}
+
+
+		addition infos{
+			startTime : 2024-01-02 00:00:00
+			payDate : 2024-01-02 00:00:00
+			confirmDate : 2024-01-02 00:00:00
+			returnDate : 2024-01-02 00:00:00
+			latePaid : 101
+			payDuration : 2024-01-02 00:00:00
+			deliverDate : 2024-01-02 00:00:00
+			deliverDuration : 2024-01-02 00:00:00
+			payRate : 0.5
+		}
+
+		@@买方可以购买货物
+		term no1:Buyer can buyMeat
+			where startTime = now and payDate = now + payDuration
+
+		@@买方应当于支付日期前向卖方支付定金（downPayment=price * payRate）
+		term no2:Buyer must payDownplayed
+			when after Buyer did buyMeat and before payDate
+			while transfer price * payRate to Seller
+			where deliverDate = now + deliverDuration
+
+		@@卖方必须交付货物(缺失公约中的一个when条件)
+		term no3:Seller must deliverMeat
+			while transfer $meatRight to Buyer
+
+		@@买方必须在卖方交付货物后十天内支付余款
+		term no4:Buyer must payBalance
+			when within 10 day after Seller did deliverMeat
+			while transfer (1-payRate) * price to Seller
+
+
+		signature of party Buyer:
+		{		printedName: li,
+				signature: 2343214,
+				date: 2024/01/02
+		}
+		signature of party Seller:
+		{		printedName: li,
+				signature: 2343214,
+				date: 2024/01/02
+		}
+}
