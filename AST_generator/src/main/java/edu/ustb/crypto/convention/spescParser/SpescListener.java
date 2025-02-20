@@ -98,6 +98,26 @@ public interface SpescListener extends ParseTreeListener {
 	 */
 	void exitAsset(SpescParser.AssetContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SpescParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterProperty(SpescParser.PropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SpescParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitProperty(SpescParser.PropertyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SpescParser#propertyName}.
+	 * @param ctx the parse tree
+	 */
+	void enterPropertyName(SpescParser.PropertyNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SpescParser#propertyName}.
+	 * @param ctx the parse tree
+	 */
+	void exitPropertyName(SpescParser.PropertyNameContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SpescParser#field}.
 	 * @param ctx the parse tree
 	 */

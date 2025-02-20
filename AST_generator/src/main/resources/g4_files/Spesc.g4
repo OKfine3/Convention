@@ -30,7 +30,9 @@ contractBody :
 party : comment* (PARTY partyName '{' field* '}' | PARTY GROUP partyName '{' field* '}');
 
 //asset definition
-asset : comment* ASSET assetName '{' info? right? field*'}' ; // property*  property : (',')? propertyName '=' (BoolValue); //性质
+asset : comment* ASSET assetName '{' info? right? field*'}' property*; // property*  property : (',')? propertyName '=' (BoolValue); //性质
+property : (',')? propertyName '=' (BoolValue); //性质
+propertyName : IDENTIFIER;
 
 field :comment* name COLON (type | value | array | jsonObject) ;
 addition: ADDITION additionName '{' field* '}';

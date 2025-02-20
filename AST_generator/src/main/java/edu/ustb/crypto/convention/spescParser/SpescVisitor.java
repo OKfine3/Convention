@@ -65,6 +65,18 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAsset(SpescParser.AssetContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SpescParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProperty(SpescParser.PropertyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SpescParser#propertyName}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPropertyName(SpescParser.PropertyNameContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SpescParser#field}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
