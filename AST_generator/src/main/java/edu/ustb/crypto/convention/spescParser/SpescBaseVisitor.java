@@ -690,6 +690,13 @@ public class SpescBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitCvDuty(SpescParser.CvDutyContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitMustFulfilObligation(SpescParser.MustFulfilObligationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

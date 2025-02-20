@@ -229,7 +229,7 @@ comparativeRelationExpression : (
 	atomExpression (relationOperator atomExpression )?
 );
 
-atomExpression : ( constantExpression | variableReference |  expression );
+atomExpression : ( constantExpression | variableReference |  expressions );
 constantExpression:	( rule_INTEGER   |  rule_STRING    | 	rule_BOOLEAN   | rule_FLOAT | rule_DOUBLE );
 
 rule_STRING :
@@ -242,16 +242,16 @@ rule_FLOAT :  ('+' | '-')?   (  rule_INTEGER '.'  rule_INTEGER?  |  '.'  rule_IN
 rule_DOUBLE :  ('+' | '-')?   (  rule_INTEGER '.'  rule_INTEGER?  |  '.'  rule_INTEGER );
 variableReference : IDENTIFIER (ofOperator variableReference )?;
 
-expression : variableReference #VarReference
+expressions : variableReference #VarReference
 			| value #ValueExpr
-			| '(' expression '*' expression ')' #MULTIPLY
-			| expression '*' expression #MULTIPLY
-			| '(' expression '/' expression ')' #DIVIDE
-			| expression '/' expression #DIVIDE
-			| '(' expression '+' expression ')' #ADD
-			| expression '+' expression #ADD
-			| '(' expression '-' expression ')' #SUBSTRACT
-			| expression '-' expression #SUBSTRACT
+			| '(' expressions '*' expressions ')' #MULTIPLY
+			| expressions '*' expressions #MULTIPLY
+			| '(' expressions '/' expressions ')' #DIVIDE
+			| expressions '/' expressions #DIVIDE
+			| '(' expressions '+' expressions ')' #ADD
+			| expressions '+' expressions #ADD
+			| '(' expressions '-' expressions ')' #SUBSTRACT
+			| expressions '-' expressions #SUBSTRACT
 			;
 
 relationOperator : ( op='='  |  op='is'  |  op='<'  |   op='<='
@@ -271,7 +271,7 @@ moneyExpression: ('$'?
                     'value'? IDENTIFIER? (relationOperator IDENTIFIER)?
                     (logicalOperator moneyExpression)?
                  )
-                 |expression
+                 |expressions
 ;
 assetExpression : '$' (PERCENTAGE | rule_FLOAT | rule_DOUBLE ) 'of' IDENTIFIER;
 PERCENTAGE : ([0-9.]+)[ ]* '%';
@@ -294,13 +294,14 @@ itemLimitationName : IDENTIFIER;
 
 //general clause
 generalClause : clauseDeclaration  whenStatement? whileStatement? whereStatement?;
-clauseDeclaration : CLAUSE index COLON partyName (canExerciseRight | mustFulfilObligation | CANNOT) action;
+clauseDeclaration : CLAUSE index COLON partyName cvDuty action;
+cvDuty :(canExerciseRight | mustFulfilObligation | CANNOT);
 mustFulfilObligation : 'must' 'fulfil' 'obligation';
 canExerciseRight : 'can' 'exercise' 'right';
 
 //breach clause
 breachClause : breachClauseDeclaration againstDeclaration? whenStatement? whileStatement? whereStatement?;
-breachClauseDeclaration :BREACH CLAUSE index COLON partyName (canExerciseRight | mustFulfilObligation | CANNOT) action;
+breachClauseDeclaration :BREACH CLAUSE index COLON partyName cvDuty action;
 
 //legal right
 legalRight :legalRightDeclaration rightContent;

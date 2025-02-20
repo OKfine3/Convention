@@ -769,73 +769,73 @@ public interface SpescListener extends ParseTreeListener {
 	void exitVariableReference(SpescParser.VariableReferenceContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ValueExpr}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void enterValueExpr(SpescParser.ValueExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ValueExpr}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void exitValueExpr(SpescParser.ValueExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ADD}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void enterADD(SpescParser.ADDContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ADD}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void exitADD(SpescParser.ADDContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code VarReference}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void enterVarReference(SpescParser.VarReferenceContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code VarReference}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void exitVarReference(SpescParser.VarReferenceContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code SUBSTRACT}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void enterSUBSTRACT(SpescParser.SUBSTRACTContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code SUBSTRACT}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void exitSUBSTRACT(SpescParser.SUBSTRACTContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MULTIPLY}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void enterMULTIPLY(SpescParser.MULTIPLYContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code MULTIPLY}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void exitMULTIPLY(SpescParser.MULTIPLYContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code DIVIDE}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void enterDIVIDE(SpescParser.DIVIDEContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code DIVIDE}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 */
 	void exitDIVIDE(SpescParser.DIVIDEContext ctx);
@@ -979,6 +979,16 @@ public interface SpescListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitClauseDeclaration(SpescParser.ClauseDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SpescParser#cvDuty}.
+	 * @param ctx the parse tree
+	 */
+	void enterCvDuty(SpescParser.CvDutyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SpescParser#cvDuty}.
+	 * @param ctx the parse tree
+	 */
+	void exitCvDuty(SpescParser.CvDutyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SpescParser#mustFulfilObligation}.
 	 * @param ctx the parse tree

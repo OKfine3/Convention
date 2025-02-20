@@ -1169,6 +1169,18 @@ public class SpescBaseListener implements SpescListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCvDuty(SpescParser.CvDutyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCvDuty(SpescParser.CvDutyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMustFulfilObligation(SpescParser.MustFulfilObligationContext ctx) { }
 	/**
 	 * {@inheritDoc}

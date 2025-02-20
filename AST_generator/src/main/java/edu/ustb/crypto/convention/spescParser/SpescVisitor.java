@@ -468,42 +468,42 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
 	T visitVariableReference(SpescParser.VariableReferenceContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ValueExpr}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitValueExpr(SpescParser.ValueExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ADD}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitADD(SpescParser.ADDContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code VarReference}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVarReference(SpescParser.VarReferenceContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code SUBSTRACT}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSUBSTRACT(SpescParser.SUBSTRACTContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MULTIPLY}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitMULTIPLY(SpescParser.MULTIPLYContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code DIVIDE}
-	 * labeled alternative in {@link SpescParser#expression}.
+	 * labeled alternative in {@link SpescParser#expressions}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -592,6 +592,12 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitClauseDeclaration(SpescParser.ClauseDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SpescParser#cvDuty}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCvDuty(SpescParser.CvDutyContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SpescParser#mustFulfilObligation}.
 	 * @param ctx the parse tree
