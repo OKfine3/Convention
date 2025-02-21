@@ -64,6 +64,10 @@ convention SaleAndBuyConvention{
 		when after Buyer did returnGoods
 		while transfer advance to Buyer
 
+    @@违约条款9：如果买受人在支付日期确认收货日期前没有支付应付货款也没有退货，则需要缴纳滞纳金
+    breach clause no9 against clause no4:Buyer must fulfil obligation payLatePayment
+        when after confirmDate
+        while transfer latePaid to Seller
 
     implement declaration{
        Enacting Agency:Beijing,

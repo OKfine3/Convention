@@ -13,10 +13,11 @@ public class WhileGeneralExpression {
 
     final String separator = " ";
     Boolean isTransfer = false;
-    String transferSeparator = "to";
-    String to;
-
+    String transferSeparator = "to ";
+    String toTarget;
     Boolean isDeposit = false;
+
+    Boolean isWithdraw = false;
 
     SpescParser.MoneyExpressionContext moneyExpressionContext;
 
@@ -30,7 +31,7 @@ public class WhileGeneralExpression {
             res.append(moneyExpressionContext.getText());
             res.append(separator);
             res.append(transferSeparator);
-            res.append(to);
+            res.append(toTarget);
         }else if(isDeposit){
             // TODO
         }

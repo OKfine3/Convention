@@ -38,7 +38,7 @@ public class GeneralTerm {
         res.append(duty);
         res.append(separator);
         res.append(actionName);
-        res.append(_n);
+
         res.append("(");
 
         String prams = "";
@@ -53,7 +53,7 @@ public class GeneralTerm {
         res.append(prams);
 
         res.append(")");
-
+        res.append(_n);
         if(whenStatement != null){
             res.append("when ");
             List<String> whens = whenStatement.getOrExpression().getAndExpression()
@@ -88,8 +88,6 @@ public class GeneralTerm {
             res.append(result);
             res.append(_n);
         }
-
-
 
         return res.toString();
     }

@@ -1,6 +1,7 @@
 package edu.ustb.crypto.convention.compile.visitor;
 
 import edu.ustb.crypto.convention.Attribute.AttributeTreeNode;
+import edu.ustb.crypto.convention.Attribute.AttributeTypeEnum;
 import edu.ustb.crypto.convention.compile.entity.GeneralTerm;
 import edu.ustb.crypto.convention.spescParser.SpescBaseVisitor;
 import edu.ustb.crypto.convention.spescParser.SpescParser;
@@ -49,14 +50,23 @@ public class TermVisitor extends SpescBaseVisitor<AttributeTreeNode> {
             if (generalTermContext.whenStatement() != null) {
                 generalTerm.setWhenStatement(new WhenStatementVisitor().visitWhenStatement(generalTermContext.whenStatement()));
             }
-
             //伴随条件
-
-
-
+            if(generalTermContext.whileStatement() != null){
+                generalTerm.setWhileStatement(new WhileStatementVisitor().visitWhileStatement(generalTermContext.whileStatement()));
+            }
+            //后置条件
+            if(generalTermContext.whereStatement() != null){
+                generalTerm.setWhereStatement(new WhereStatementVisitor().visitWhereStatement(generalTermContext.whereStatement()));
+            }
+            AttributeTreeNode node = new AttributeTreeNode();
+            node.setType(AttributeTypeEnum.Object);
+            node.setObject(generalTerm);
+            return node;
+        }else if(breachTermContext != null){
+            // TODO
+        }else{
+            // TODO
         }
-
-        return super.visitTerm(ctx);
-
+        return null;
     }
 }

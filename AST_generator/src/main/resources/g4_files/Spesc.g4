@@ -32,6 +32,7 @@ party : comment* (PARTY partyName '{' field* '}' | PARTY GROUP partyName '{' fie
 //asset definition
 asset : comment* ASSET assetName '{' info? right? field*'}' property*; // property*  property : (',')? propertyName '=' (BoolValue); //性质
 property : (',')? propertyName '=' (BoolValue); //性质
+BoolValue : (TRUE | FALSE);
 propertyName : IDENTIFIER;
 
 field :comment* name COLON (type | value | array | jsonObject) ;
@@ -263,10 +264,10 @@ ofOperator : ( op='::' );
 
 /***************************** transfer operation ************************************/
 transferOperation :
-        'grant' variableReference 'to' IDENTIFIER |
+        GRANT variableReference 'to' IDENTIFIER |
         DEPOSIT (moneyExpression | assetExpression ) |
         WITHDRAW (moneyExpression | assetExpression) |
-        'transfer' (moneyExpression | assetExpression)'to' name
+        TRANSFER (moneyExpression | assetExpression)'to' name
         ;
 
 moneyExpression: ('$'?
@@ -298,12 +299,12 @@ itemLimitationName : IDENTIFIER;
 generalClause : clauseDeclaration  whenStatement? whileStatement? whereStatement?;
 clauseDeclaration : CLAUSE index COLON partyName cvDuty action;
 cvDuty :(canExerciseRight | mustFulfilObligation | CANNOT);
-mustFulfilObligation : 'must' 'fulfil' 'obligation';
-canExerciseRight : 'can' 'exercise' 'right';
+mustFulfilObligation : 'must ' 'fulfil ' 'obligation';
+canExerciseRight : 'can ' 'exercise ' 'right';
 
 //breach clause
-breachClause : breachClauseDeclaration againstDeclaration? whenStatement? whileStatement? whereStatement?;
-breachClauseDeclaration :BREACH CLAUSE index COLON partyName cvDuty action;
+breachClause : breachClauseDeclaration  whenStatement? whileStatement? whereStatement?;
+breachClauseDeclaration :BREACH CLAUSE index againstDeclaration? COLON partyName cvDuty action;
 
 //legal right
 legalRight :legalRightDeclaration rightContent;
@@ -381,6 +382,7 @@ ALL : 'all' ;
 SOME : 'some' ;
 THIS : 'this' ;
 DID : 'did' ;
+GRANT : 'grant';
 DEPOSIT : 'deposit' ;
 WITHDRAW : 'withdraw' ;
 TRANSFER : 'transfer' ;

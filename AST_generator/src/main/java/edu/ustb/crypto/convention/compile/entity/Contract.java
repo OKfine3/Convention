@@ -110,9 +110,11 @@ public class Contract {
             res.append("}");
             res.append(_n);
         });
-        for (GeneralTerm generalTerm : generalTerms) {
-            res.append(generalTerm.toString());
-            res.append(_n);
+        if(generalTerms!=null){
+            for (GeneralTerm generalTerm : generalTerms) {
+                res.append(generalTerm.toString());
+                res.append(_n);
+            }
         }
         res.append("}");
         return res.toString();

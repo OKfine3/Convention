@@ -1,9 +1,13 @@
 package edu.ustb.crypto.convention.Attribute;
 
+import lombok.Data;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Data
 public class AttributeTreeNode {
     /**
      * 该节点的子节点的类型
@@ -110,4 +114,6 @@ public class AttributeTreeNode {
     public int hashCode() {
         return Objects.hash(type, nodeName, children,extraChildren);
     }
+
+
 }

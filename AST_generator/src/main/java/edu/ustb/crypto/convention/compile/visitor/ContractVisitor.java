@@ -2,8 +2,7 @@ package edu.ustb.crypto.convention.compile.visitor;
 
 import edu.ustb.crypto.convention.Attribute.AttributeTreeNode;
 import edu.ustb.crypto.convention.Attribute.AttributeTypeEnum;
-import edu.ustb.crypto.convention.compile.entity.Contract;
-import edu.ustb.crypto.convention.compile.entity.Convention;
+import edu.ustb.crypto.convention.compile.entity.*;
 import edu.ustb.crypto.convention.spescParser.SpescBaseVisitor;
 import edu.ustb.crypto.convention.spescParser.SpescParser;
 import org.antlr.v4.runtime.misc.Pair;
@@ -96,10 +95,49 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
             additionMap.put(name,pairs);
         }
         contract.setAdditions(additionMap);
+        if(contract.getContractType().equals("contract")){
+            List<GeneralTerm> generalTerms = new ArrayList<>();
+            for (SpescParser.TermContext termContext : contractBodyContext.term()) {
+                TermVisitor termVisitor = new TermVisitor();
+                AttributeTreeNode node = termVisitor.visitTerm(termContext);
+                Object object = node.getObject();
+                GeneralTerm generalTerm = null;
+                if(object instanceof GeneralTerm){
+                    generalTerm = (GeneralTerm) object;
+                    generalTerms.add(generalTerm);
+                }
+            }
+            contract.setGeneralTerms(generalTerms);
+            return contract;
 
-
-        return null;
-
-//        return super.visitContractDefinition(ctx);
+            //TODO 缺少违约条款和仲裁条款
+        } else{
+            Convention convention = (Convention)contract;
+            List<GeneralClause> generalClauses = new ArrayList<>();
+            List<BreachClause> breachClauses = new ArrayList<>();
+            List<BindClause> bindClauses = new ArrayList<>();
+            for (SpescParser.ClauseContext clauseContext : contractBodyContext.clause()) {
+                ClauseVisitor clauseVisitor = new ClauseVisitor();
+                AttributeTreeNode node = clauseVisitor.visitClause(clauseContext);
+                Object object = node.getObject();
+                GeneralClause generalClause = null;
+                BreachClause breachClause = null;
+                BindClause bindClause = null;
+                if(object instanceof GeneralClause){
+                    generalClause = (GeneralClause) object;
+                    generalClauses.add(generalClause);
+                }else if(object instanceof BindClause){
+                    bindClause = (BindClause)object;
+                    bindClauses.add(bindClause);
+                }else if(object instanceof BreachClause){
+                    breachClause  = (BreachClause) object;
+                    breachClauses.add(breachClause);
+                }
+            }
+            convention.setBindClauses(bindClauses);
+            convention.setBreachClauses(breachClauses);
+            convention.setGeneralClauses(generalClauses);
+            return convention;
+        }
     }
 }
