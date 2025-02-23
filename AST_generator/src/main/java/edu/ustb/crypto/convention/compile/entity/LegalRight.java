@@ -19,10 +19,14 @@ import java.util.List;
 public class LegalRight {
     //权利名称
     String rightName;
+    //包含子权利
+    String includingRightName;
+
     //权利主体
     String rightSubject;
+
     //权利客体
-    List<String> rightObject;
+    List<String> rightObjectName;
     //法律来源
     List<String> lawSource;
 }

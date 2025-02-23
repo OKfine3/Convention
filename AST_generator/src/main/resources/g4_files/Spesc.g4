@@ -310,17 +310,19 @@ breachClauseDeclaration :BREACH CLAUSE index againstDeclaration? COLON partyName
 legalRight :legalRightDeclaration rightContent;
 legalRightDeclaration : rightOf rightName UNDER IDENTIFIER+ COLON;
 rightContent : rightSubject rightObject lawSource;
-rightSubject : partyName possessTheRight (INCLUDING '['rightName (',' rightName)*']')?;
+rightSubject : partyName possessTheRight (INCLUDING '['includingRightName (',' includingRightName)*']')?;
 possessTheRight : 'possess' 'the' 'right';
 
-rightObject : onTheObject INCLUDING '[' assetName (',' assetName)* ']' ;
+rightObject : onTheObject INCLUDING '[' rightObjectName (',' rightObjectName)* ']' ;
 onTheObject : 'on' 'the' 'object';
 
 lawSource : accordTo '[' lawName (',' lawName)* ']' ;
 accordTo : 'according' 'to';
 rightOf : 'legalRight' 'of';
+includingRightName : IDENTIFIER;
 rightName : IDENTIFIER;
 lawName : IDENTIFIER;
+rightObjectName : IDENTIFIER;
 
 
 impldeclaration : IMPLEMENT DECLARATION

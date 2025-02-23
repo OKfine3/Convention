@@ -1140,43 +1140,84 @@ public interface SpescListener extends ParseTreeListener {
 	 */
 	void exitAccordTo(SpescParser.AccordToContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SpescParser#rightOf}.
-	 * @param ctx the parse tree
-	 */
-	void enterRightOf(SpescParser.RightOfContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#rightOf}.
-	 * @param ctx the parse tree
-	 */
-	void exitRightOf(SpescParser.RightOfContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SpescParser#rightName}.
-	 * @param ctx the parse tree
-	 */
-	void enterRightName(SpescParser.RightNameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#rightName}.
-	 * @param ctx the parse tree
-	 */
-	void exitRightName(SpescParser.RightNameContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SpescParser#lawName}.
-	 * @param ctx the parse tree
-	 */
-	void enterLawName(SpescParser.LawNameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#lawName}.
-	 * @param ctx the parse tree
-	 */
-	void exitLawName(SpescParser.LawNameContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SpescParser#impldeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterImpldeclaration(SpescParser.ImpldeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#impldeclaration}.
-	 * @param ctx the parse tree
+     * Enter a parse tree produced by {@link SpescParser#rightOf}.
+     * @param ctx the parse tree
+     */
+    void enterRightOf(SpescParser.RightOfContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#rightOf}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitRightOf(SpescParser.RightOfContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#includingRightName}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterIncludingRightName(SpescParser.IncludingRightNameContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#includingRightName}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitIncludingRightName(SpescParser.IncludingRightNameContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#rightName}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterRightName(SpescParser.RightNameContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#rightName}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitRightName(SpescParser.RightNameContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#lawName}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterLawName(SpescParser.LawNameContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#lawName}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitLawName(SpescParser.LawNameContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#rightObjectName}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterRightObjectName(SpescParser.RightObjectNameContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#rightObjectName}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitRightObjectName(SpescParser.RightObjectNameContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#impldeclaration}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterImpldeclaration(SpescParser.ImpldeclarationContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#impldeclaration}.
+     * @param ctx the parse tree
 	 */
 	void exitImpldeclaration(SpescParser.ImpldeclarationContext ctx);
 	/**

@@ -10,7 +10,15 @@ import org.junit.Test;
 public class ContractVisitorTest {
 
     @Test
-    public void breachClauseTest(){
+    public void ctxTest() {
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
+        SpescParser.ContractDefinitionContext contractDefinitionContext = parser.contractDefinition();
+        Contract contract = new ContractVisitor().visitContractDefinition(contractDefinitionContext);
+        System.out.println(contract);
+    }
+
+    @Test
+    public void breachClauseTest() {
         SpescParser parser = ParserUtil.getParser(
                 "@@违约条款9：如果买受人在支付日期确认收货日期前没有支付应付货款也没有退货，则需要缴纳滞纳金\n" +
                         "    breach clause no9 against clause no4:Buyer must fulfil obligation payLatePayment\n" +
@@ -29,8 +37,6 @@ public class ContractVisitorTest {
                         "\t\twhile transfer $goodsRight to Buyer");
         AttributeTreeNode attributeTreeNode = new ClauseVisitor().visitClause(parser.clause());
         System.out.println(attributeTreeNode);
-
-
     }
 
     @Test
@@ -118,14 +124,6 @@ public class ContractVisitorTest {
         Contract convention = new ContractVisitor().visitContractDefinition(conventionDefinitionContext);
         System.out.println(convention);
 
-    }
-
-    @Test
-    public void ctxTest(){
-        SpescParser parser= Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
-        SpescParser.ContractDefinitionContext contractDefinitionContext = parser.contractDefinition();
-        Contract contract=new ContractVisitor().visitContractDefinition(contractDefinitionContext);
-        System.out.println(contract);
     }
 
     @Test

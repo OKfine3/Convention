@@ -685,38 +685,64 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
 	/**
 	 * Visit a parse tree produced by {@link SpescParser#accordTo}.
 	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAccordTo(SpescParser.AccordToContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#rightOf}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRightOf(SpescParser.RightOfContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#rightName}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRightName(SpescParser.RightNameContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#lawName}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLawName(SpescParser.LawNameContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#impldeclaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitImpldeclaration(SpescParser.ImpldeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
+     * @return the visitor result
+     */
+    T visitAccordTo(SpescParser.AccordToContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#rightOf}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitRightOf(SpescParser.RightOfContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#includingRightName}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitIncludingRightName(SpescParser.IncludingRightNameContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#rightName}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitRightName(SpescParser.RightNameContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#lawName}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitLawName(SpescParser.LawNameContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#rightObjectName}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitRightObjectName(SpescParser.RightObjectNameContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#impldeclaration}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitImpldeclaration(SpescParser.ImpldeclarationContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#value}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
 	T visitValue(SpescParser.ValueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SpescParser#index}.
