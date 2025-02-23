@@ -22,7 +22,9 @@ public class ContractVisitorTest {
         SpescParser parser = ParserUtil.getParser(
                 "@@条款1:约束条款\n" +
                         "    bind clause no1:\n" +
+//                        "        price * 2" +
                         "        downPayment <= price * 20\n" +
+                        "        rentDuration = 10 * rate\n" +
                         "        Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, HumanOrgans]");
         AttributeTreeNode attributeTreeNode = new ClauseVisitor().visitClause(parser.clause());
         System.out.println(attributeTreeNode);
@@ -79,12 +81,13 @@ public class ContractVisitorTest {
                         "    legalRight of ownershipRight under Art240:\n" +
                         "        Seller possess the right including [possessRight, useRight, usufructRight, desposeRight]\n" +
                         "        on the object including [immoAvableProperty, movableProperty]\n" +
-                        "        according to Civil_Code_of_the_Peoples_Republic_of_China\n" +
+                        "        according to [Civil_Code_of_the_Peoples_Republic_of_China]\n" +
                         "\n" +
                         "\n" +
                         "    @@条款1:约束条款\n" +
                         "    bind clause no1:\n" +
                         "        downPayment <= price * 20\n" +
+                        "        rentDuration = 10\n" +
                         "        Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, HumanOrgans]\n" +
                         "\n" +
                         "\t@@条款2：买受人可以开始购买货物\n" +

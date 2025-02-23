@@ -219,9 +219,9 @@ relational_expression : arithmetic_expression (relationOperator arithmetic_expre
 // 算数表达式定义，优先级高低
 arithmetic_expression : addSubExpression ;
 
-addSubExpression : mulDivExpression (('+' | '-') mulDivExpression)* ;
+addSubExpression : mulDivExpression ((op = '+' | op = '-') mulDivExpression)* ;
 
-mulDivExpression : primaryExpression (('*' | '/') primaryExpression)* ;
+mulDivExpression : primaryExpression ((op = '*' | op = '/') primaryExpression)* ;
 
 primaryExpression : value | '(' arithmetic_expression ')' ;
 /***************************expression definition************************************/
@@ -287,7 +287,7 @@ clause : comment* ( bindClause | generalClause | breachClause );
 //bind clause
 
 //bindClause : BIND CLAUSE index COLON assignmentExpression* factorBind*;
-bindClause : BIND CLAUSE index COLON childExpression* factorBind*;
+bindClause : BIND CLAUSE index COLON (childExpression ','?)* factorBind*;
 
 factorBind : factor lo_type itemLimitation;
 lo_type : ( 'IN' | 'NOT_IN');
@@ -336,7 +336,7 @@ impldeclaration : IMPLEMENT DECLARATION
 
 
 
-value : NUMBER | decimal | IDENTIFIER | RULE_STRING | date | CHINESE | TRUE | FALSE;
+value : rule_DOUBLE | NUMBER | decimal | IDENTIFIER | RULE_STRING | date | CHINESE | TRUE | FALSE ;
 index : op=NUMBER | op=INDEX ;
 decimal : NUMBER '.' NUMBER // 整数部分 + 小数点 + 小数部分
         | '.' NUMBER          // 只有小数部分，没有整数部分

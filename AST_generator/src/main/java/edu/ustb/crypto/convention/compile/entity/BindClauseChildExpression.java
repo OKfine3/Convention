@@ -19,5 +19,5 @@ public class BindClauseChildExpression {
 
     String p0;
     String equalSeparator;
-    SpescParser.Arithmetic_expressionContext p1;
+    Object p1;
 }

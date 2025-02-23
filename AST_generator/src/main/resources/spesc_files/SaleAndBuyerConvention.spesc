@@ -30,6 +30,7 @@ convention SaleAndBuyConvention{
     @@条款1:约束条款
     bind clause no1:
         downPayment <= price * 20
+        rentDuration = 10
         Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, HumanOrgans]
 
 	@@条款2：买受人可以开始购买货物

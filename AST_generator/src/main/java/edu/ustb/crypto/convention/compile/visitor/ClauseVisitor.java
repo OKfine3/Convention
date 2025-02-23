@@ -8,6 +8,7 @@ import edu.ustb.crypto.convention.spescParser.SpescParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -22,25 +23,56 @@ public class ClauseVisitor extends SpescBaseVisitor<AttributeTreeNode> {
         SpescParser.BreachClauseContext breachClauseContext = ctx.breachClause();
         AttributeTreeNode node = new AttributeTreeNode();
         node.setType(AttributeTypeEnum.Object);
-        if(bindClauseContext != null){
+        if (bindClauseContext != null) {
             BindClause bindClause = new BindClause();
             String index = bindClauseContext.index().getText();
             bindClause.setClauseName(index);
             OrExpression orExpression = new OrExpression();
+            List<OrExpression> orExpressions = new ArrayList<>();
             ArrayList<AndExpression> andExpressions = new ArrayList<>();
             for (SpescParser.ChildExpressionContext childExpressionContext : bindClauseContext.childExpression()) {
-                String p0 = childExpressionContext.relational_expression().arithmetic_expression().get(0).addSubExpression().mulDivExpression().get(0).primaryExpression().get(0).value().getText();
-                SpescParser.Arithmetic_expressionContext p1 = childExpressionContext.relational_expression().arithmetic_expression().get(1);
+                String p0;
+                String p1;
+
                 BindClauseChildExpression bindClauseChildExpression = new BindClauseChildExpression();
-                bindClauseChildExpression.setP0(p0);
+                SpescParser.Assignment_expressionContext assignment_expressionContext = childExpressionContext.assignment_expression();
+                SpescParser.Relational_expressionContext relational_expressionContext = childExpressionContext.relational_expression();
+                SpescParser.Arithmetic_expressionContext arithmetic_expressionContext = childExpressionContext.arithmetic_expression();
+                if (assignment_expressionContext != null) {
+                    p0 = assignment_expressionContext.IDENTIFIER().getText();
+                    p1 = assignment_expressionContext.childExpression().getText();
+                    bindClauseChildExpression.setP0(p0);
+                    bindClauseChildExpression.setP1(p1);
+                    bindClauseChildExpression.setEqualSeparator("=");
+                } else if (relational_expressionContext != null) {
+                    if (relational_expressionContext.arithmetic_expression().size() > 1) {
+                        p0 = relational_expressionContext.arithmetic_expression().get(0).addSubExpression().mulDivExpression().get(0).primaryExpression().get(0).value().getText();
+                        p1 = relational_expressionContext.arithmetic_expression().get(1).getText();
+                        bindClauseChildExpression.setP0(p0);
+                        bindClauseChildExpression.setP1(p1);
+                        bindClauseChildExpression.setEqualSeparator(childExpressionContext.relational_expression().getChild(1).getText());
+                    } else {
+                        p0 = relational_expressionContext.arithmetic_expression().get(0).addSubExpression().mulDivExpression().get(0).primaryExpression().get(0).getText();
+                        p1 = relational_expressionContext.arithmetic_expression().get(0).addSubExpression().mulDivExpression().get(0).primaryExpression().get(1).getText();
+                        bindClauseChildExpression.setP0(p0);
+                        bindClauseChildExpression.setP1(p1);
+                        bindClauseChildExpression.setEqualSeparator(relational_expressionContext.getChild(0).getChild(0).getChild(0).getChild(1).getText());
+                    }
+
+                }
+
+
+                /*bindClauseChildExpression.setP0(p0);
                 bindClauseChildExpression.setP1(p1);
-                bindClauseChildExpression.setEqualSeparator(childExpressionContext.relational_expression().getChild(1).getText());
+                bindClauseChildExpression.setEqualSeparator(childExpressionContext.relational_expression().getChild(1).getText());*/
                 AndExpression andExpression = new AndExpression();
                 andExpression.setBindClauseChildExpression(bindClauseChildExpression);
                 andExpressions.add(andExpression);
             }
+//            orExpression.setAndExpression(andExpressions);
             orExpression.setAndExpression(andExpressions);
-            bindClause.setChildExpression(orExpression);
+            orExpressions.add(orExpression);
+            bindClause.setChildExpression(orExpressions);
             orExpression = new OrExpression();
             andExpressions = new ArrayList<>();
             for (SpescParser.FactorBindContext factorBindContext : bindClauseContext.factorBind()) {
@@ -48,7 +80,7 @@ public class ClauseVisitor extends SpescBaseVisitor<AttributeTreeNode> {
                 BindClauseFactorBind bindClauseFactorBind = new BindClauseFactorBind();
                 String partyName = factorBindContext.factor().partyName().getText();
                 bindClauseFactorBind.setPartyName(partyName);
-                if("NOT_IN".equals(factorBindContext.lo_type().getText())){
+                if ("NOT_IN".equals(factorBindContext.lo_type().getText())) {
                     bindClauseFactorBind.setIfNotIn(Boolean.TRUE);
                 }
                 bindClauseFactorBind.setItemLimitationName(factorBindContext.itemLimitation().itemLimitationName().getText());
@@ -63,36 +95,36 @@ public class ClauseVisitor extends SpescBaseVisitor<AttributeTreeNode> {
             orExpression.setAndExpression(andExpressions);
             bindClause.setFactorBinds(orExpression);
             node.setObject(bindClause);
-        }else if(generalClauseContext != null){
+        } else if (generalClauseContext != null) {
             GeneralClause generalClause = new GeneralClause();
             generalClause.setClauseName(generalClauseContext.clauseDeclaration().index().getText());
             generalClause.setActionName(generalClauseContext.clauseDeclaration().action().actionName().getText());
             generalClause.setPartyName(generalClauseContext.clauseDeclaration().partyName().getText());
             generalClause.setDutyConditionType(generalClauseContext.clauseDeclaration().cvDuty().getText());
-            if(generalClauseContext.whenStatement()!=null){
+            if (generalClauseContext.whenStatement() != null) {
                 generalClause.setWhenStatement(new WhenStatementVisitor().visitWhenStatement(generalClauseContext.whenStatement()));
             }
-            if(generalClauseContext.whileStatement()!=null){
+            if (generalClauseContext.whileStatement() != null) {
                 generalClause.setWhileStatement(new WhileStatementVisitor().visitWhileStatement(generalClauseContext.whileStatement()));
             }
-            if(generalClauseContext.whereStatement()!=null){
+            if (generalClauseContext.whereStatement() != null) {
                 generalClause.setWhereStatement(new WhereStatementVisitor().visitWhereStatement(generalClauseContext.whereStatement()));
             }
             node.setObject(generalClause);
-        }else if(breachClauseContext != null){
+        } else if (breachClauseContext != null) {
             BreachClause breachClause = new BreachClause();
             breachClause.setAgainstClauseName(breachClauseContext.breachClauseDeclaration().againstDeclaration().index().stream().map(item -> item.getText()).collect(Collectors.toList()));
             breachClause.setClauseName(breachClauseContext.breachClauseDeclaration().index().getText());
             breachClause.setActionName(breachClauseContext.breachClauseDeclaration().action().actionName().getText());
             breachClause.setPartyName(breachClauseContext.breachClauseDeclaration().partyName().getText());
             breachClause.setDutyConditionType(breachClauseContext.breachClauseDeclaration().cvDuty().getText());
-            if(breachClauseContext.whenStatement()!=null){
+            if (breachClauseContext.whenStatement() != null) {
                 breachClause.setWhenStatement(new WhenStatementVisitor().visitWhenStatement(breachClauseContext.whenStatement()));
             }
-            if(breachClauseContext.whileStatement()!=null){
+            if (breachClauseContext.whileStatement() != null) {
                 breachClause.setWhileStatement(new WhileStatementVisitor().visitWhileStatement(breachClauseContext.whileStatement()));
             }
-            if(breachClauseContext.whereStatement()!=null){
+            if (breachClauseContext.whereStatement() != null) {
                 breachClause.setWhereStatement(new WhereStatementVisitor().visitWhereStatement(breachClauseContext.whereStatement()));
             }
             node.setObject(breachClause);

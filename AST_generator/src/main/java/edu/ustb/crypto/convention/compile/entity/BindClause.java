@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * @author lijiru152@qq.com
  * @date 2024/6/1 14:55
@@ -16,6 +18,6 @@ import lombok.ToString;
 @ToString
 public class BindClause {
     private String clauseName;
-    private OrExpression childExpression;
+    private List<OrExpression> childExpression;
     private OrExpression factorBinds;
 }
