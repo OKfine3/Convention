@@ -17,12 +17,12 @@ public class Contract {
 
     String constrainttedContractName;
 
-    Map<String, List<Pair<String,String>>> partys;
+    Map<String, List<Pair<String, String>>> partys;
 
-    Map<String, List<Pair<String,String>>> assets;
-    Map<String, List<Pair<String,String>>> assetExtraProps;
+    Map<String, List<Pair<String, String>>> assets;
+    Map<String, List<Pair<String, String>>> assetExtraProps;
 
-    Map<String, List<Pair<String,String>>> additions;
+    Map<String, List<Pair<String, String>>> additions;
 
     List<GeneralTerm> generalTerms;
 
@@ -45,7 +45,7 @@ public class Contract {
         res.append(_n);
 
         // party
-        partys.forEach((key,value) ->{
+        partys.forEach((key, value) -> {
             res.append("party");
             res.append(separator);
             String partyname = key;
@@ -67,7 +67,7 @@ public class Contract {
         });
 
         // asset
-        assets.forEach((key,value) ->{
+        assets.forEach((key, value) -> {
             res.append("asset");
             res.append(separator);
             String partyname = key;
@@ -90,7 +90,7 @@ public class Contract {
 
 
         // addition
-        additions.forEach((key,value) ->{
+        additions.forEach((key, value) -> {
             res.append("addition");
             res.append(separator);
             String partyname = key;
@@ -110,7 +110,7 @@ public class Contract {
             res.append("}");
             res.append(_n);
         });
-        if(generalTerms!=null){
+        if (generalTerms != null) {
             for (GeneralTerm generalTerm : generalTerms) {
                 res.append(generalTerm.toString());
                 res.append(_n);

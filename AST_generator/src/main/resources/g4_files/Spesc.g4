@@ -299,8 +299,8 @@ itemLimitationName : IDENTIFIER;
 generalClause : clauseDeclaration  whenStatement? whileStatement? whereStatement?;
 clauseDeclaration : CLAUSE index COLON partyName cvDuty action;
 cvDuty :(canExerciseRight | mustFulfilObligation | CANNOT);
-mustFulfilObligation : 'must ' 'fulfil ' 'obligation';
-canExerciseRight : 'can ' 'exercise ' 'right';
+mustFulfilObligation : 'must' 'fulfil ' 'obligation';
+canExerciseRight : 'can' 'exercise ' 'right';
 
 //breach clause
 breachClause : breachClauseDeclaration  whenStatement? whileStatement? whereStatement?;

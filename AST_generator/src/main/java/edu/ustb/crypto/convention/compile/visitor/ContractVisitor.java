@@ -102,7 +102,7 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
                 AttributeTreeNode node = termVisitor.visitTerm(termContext);
                 Object object = node.getObject();
                 GeneralTerm generalTerm = null;
-                if(object instanceof GeneralTerm){
+                if (object instanceof GeneralTerm) {
                     generalTerm = (GeneralTerm) object;
                     generalTerms.add(generalTerm);
                 }
@@ -111,8 +111,10 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
             return contract;
 
             //TODO 缺少违约条款和仲裁条款
-        } else{
-            Convention convention = (Convention)contract;
+        } else { //公约
+            Convention convention = (Convention) contract;
+            String conventionName = ctx.IDENTIFIER().get(0).getText();
+            convention.setConventionName(conventionName);
             List<GeneralClause> generalClauses = new ArrayList<>();
             List<BreachClause> breachClauses = new ArrayList<>();
             List<BindClause> bindClauses = new ArrayList<>();

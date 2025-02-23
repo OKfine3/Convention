@@ -1,6 +1,5 @@
 package edu.ustb.crypto.convention.compile.visitor;
 
-
 import edu.ustb.crypto.convention.Attribute.AttributeTreeNode;
 import edu.ustb.crypto.convention.analysis.Iterator;
 import edu.ustb.crypto.convention.compile.entity.Contract;

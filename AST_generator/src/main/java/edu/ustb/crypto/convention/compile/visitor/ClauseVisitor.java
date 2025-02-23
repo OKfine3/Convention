@@ -81,7 +81,6 @@ public class ClauseVisitor extends SpescBaseVisitor<AttributeTreeNode> {
             node.setObject(generalClause);
         }else if(breachClauseContext != null){
             BreachClause breachClause = new BreachClause();
-//            breachClause.setAgainstClauseName(breachClauseContext.againstDeclaration().index().stream().map(item -> item.getText()).collect(Collectors.toList()));
             breachClause.setAgainstClauseName(breachClauseContext.breachClauseDeclaration().againstDeclaration().index().stream().map(item -> item.getText()).collect(Collectors.toList()));
             breachClause.setClauseName(breachClauseContext.breachClauseDeclaration().index().getText());
             breachClause.setActionName(breachClauseContext.breachClauseDeclaration().action().actionName().getText());
