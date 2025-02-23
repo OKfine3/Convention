@@ -33,7 +33,7 @@ public class WhenOrExpressionVisitor extends SpescBaseVisitor<OrExpression> {
         for (SpescParser.AndExpressionContext andExpressionContext : andExpressionContexts) {
             //创建一个空的 andExpressions 对象
             List<AndExpression> andExpressions = orExpression.getAndExpression();
-            //循环每一个
+
             for (SpescParser.AndChildExpressionContext andChildExpressionContext : andExpressionContext.andChildExpression()) {
                 AndExpression andExpression = new AndExpression();
                 WhenGeneralExpression generalExpression = new WhenGeneralExpression();
@@ -45,7 +45,6 @@ public class WhenOrExpressionVisitor extends SpescBaseVisitor<OrExpression> {
                     timeExpressionContext = notExpressionContext.timeExpression();
                 }
                 //timeExpressionContext 也应该判空一下（但是由于when条件中几乎都有时间判断，此处暂省略）
-
                 SpescParser.BoundedTimePredicateContext boundedTimePredicateContext = timeExpressionContext.timePeriodExpression().boundedTimePredicate();
                 String preStatement = "";
                 if(boundedTimePredicateContext.WITHIN() != null){

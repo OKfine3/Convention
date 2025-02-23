@@ -34,7 +34,7 @@ public class WhileStatementVisitor extends SpescBaseVisitor<WhileStatement> {
             TerminalNode transfer = transferOperationContext.TRANSFER();
             TerminalNode grant = transferOperationContext.GRANT();
 
-            //创建WhileGeneralExpression对象
+            //创建 WhileGeneralExpression 对象
             WhileGeneralExpression whileGeneralExpression = new WhileGeneralExpression();
 
             //处理deposit逻辑

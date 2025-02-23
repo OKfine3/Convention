@@ -29,6 +29,7 @@ public class WhereStatementVisitor extends SpescBaseVisitor<WhereStatement> {
                 WhereGeneralExpression whereGeneralExpression = new WhereGeneralExpression();
                 SpescParser.Assignment_expressionContext context = childExpressionContext.assignment_expression();
                 String p0 = context.IDENTIFIER().getText();
+                //此处是写死了吗，考虑如果有 relational_expression() 的情况，动态处理
                 List<SpescParser.Arithmetic_expressionContext> arithmetic_expressionContexts = context.childExpression().relational_expression().arithmetic_expression();
                 SpescParser.Arithmetic_expressionContext arithmetic_expressionContext = arithmetic_expressionContexts.get(0);
                 whereGeneralExpression.setP0(p0);

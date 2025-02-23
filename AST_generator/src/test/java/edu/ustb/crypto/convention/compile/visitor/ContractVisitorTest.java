@@ -18,6 +18,17 @@ public class ContractVisitorTest {
     }
 
     @Test
+    public void bindClause() {
+        SpescParser parser = ParserUtil.getParser(
+                "@@条款1:约束条款\n" +
+                        "    bind clause no1:\n" +
+                        "        downPayment <= price * 20\n" +
+                        "        Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, HumanOrgans]");
+        AttributeTreeNode attributeTreeNode = new ClauseVisitor().visitClause(parser.clause());
+        System.out.println(attributeTreeNode);
+    }
+
+    @Test
     public void breachClauseTest() {
         SpescParser parser = ParserUtil.getParser(
                 "@@违约条款9：如果买受人在支付日期确认收货日期前没有支付应付货款也没有退货，则需要缴纳滞纳金\n" +
