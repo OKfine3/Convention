@@ -1,0 +1,10 @@
+contract SaleAndBuyContractGeneral constraint_by SaleAndBuyConvention{
+
+		@@买方应当于支付日期前向卖方支付定金（downPayment=price * payRate）
+		term no2:Buyer must payDownplayed
+			when after Buyer did buyMeat and before payDate
+			while transfer price * payRate to Seller
+			where deliverDate = now + deliverDuration
+
+
+}

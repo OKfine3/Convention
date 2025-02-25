@@ -2,11 +2,13 @@ package edu.ustb.crypto.convention.compile.visitor;
 
 import edu.ustb.crypto.convention.Attribute.AttributeTreeNode;
 import edu.ustb.crypto.convention.Attribute.AttributeTypeEnum;
+import edu.ustb.crypto.convention.compile.entity.BreachTerm;
 import edu.ustb.crypto.convention.compile.entity.GeneralTerm;
 import edu.ustb.crypto.convention.spescParser.SpescBaseVisitor;
 import edu.ustb.crypto.convention.spescParser.SpescParser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @auther lwj
@@ -62,8 +64,50 @@ public class TermVisitor extends SpescBaseVisitor<AttributeTreeNode> {
             node.setType(AttributeTypeEnum.Object);
             node.setObject(generalTerm);
             return node;
-        }else if(breachTermContext != null){
-            // TODO
+        }else if(breachTermContext != null) {
+            SpescParser.BreachTermDeclarationContext breachTermDeclarationContext = breachTermContext.breachTermDeclaration();
+
+            String idxText = breachTermDeclarationContext.index().getText();
+            List<SpescParser.IndexContext> indexs = breachTermDeclarationContext.againstDeclaration().index();
+            String partyName = breachTermDeclarationContext.partyName().getText();
+            String duty = breachTermDeclarationContext.duty().getText();
+            String actionName = breachTermDeclarationContext.action().actionName().getText();
+
+            BreachTerm breachTerm = new BreachTerm();
+            breachTerm.setTermName(idxText);
+            breachTerm.setPartyName(partyName);
+            breachTerm.setDuty(duty);
+            breachTerm.setActionName(actionName);
+            ArrayList<String> againstNames = new ArrayList<>();
+
+            for (SpescParser.IndexContext againstIndex : indexs) {
+                String name = againstIndex.INDEX().getText();
+                againstNames.add(name);
+            }
+            breachTerm.setAgainstTermName(againstNames);
+
+            ArrayList<String> strings = new ArrayList<>();
+            if (breachTermDeclarationContext.action().parametersList() != null) {
+                for (SpescParser.ParameterContext parameterContext : breachTermDeclarationContext.action().parametersList().parameter()) {
+                    strings.add(parameterContext.getText());
+                }
+            }
+            breachTerm.setParameterList(strings);
+            if (breachTermContext.whenStatement() != null) {
+                breachTerm.setWhenStatement(new WhenStatementVisitor().visitWhenStatement(breachTermContext.whenStatement()));
+            }
+            if (breachTermContext.whileStatement() != null) {
+                breachTerm.setWhileStatement(new WhileStatementVisitor().visitWhileStatement(breachTermContext.whileStatement()));
+            }
+            if (breachTermContext.whereStatement() != null) {
+                breachTerm.setWhereStatement(new WhereStatementVisitor().visitWhereStatement(breachTermContext.whereStatement()));
+            }
+
+            AttributeTreeNode node = new AttributeTreeNode();
+            node.setType(AttributeTypeEnum.Object);
+            node.setObject(breachTerm);
+            return node;
+
         }else{
             // TODO
         }

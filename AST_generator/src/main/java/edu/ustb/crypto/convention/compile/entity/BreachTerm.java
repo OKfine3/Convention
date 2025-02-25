@@ -1,22 +1,31 @@
 package edu.ustb.crypto.convention.compile.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @auther lwj
+ * @date 2025/2/24 10:11
+ */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GeneralTerm {
+@ToString
+public class BreachTerm {
     private String termName;
+    private List<String> againstTermName;
     private String partyName;
     private String duty;
     private String actionName;
+
     private List<String> parameterList;
+
     private WhenStatement whenStatement;
     private WhileStatement whileStatement;
     private WhereStatement whereStatement;
@@ -31,6 +40,7 @@ public class GeneralTerm {
         res.append(separator);
         res.append(termName);
         res.append(separator);
+        res.append("against " + againstTermName.toString());
         res.append(":");
         res.append(separator);
         res.append(partyName);
