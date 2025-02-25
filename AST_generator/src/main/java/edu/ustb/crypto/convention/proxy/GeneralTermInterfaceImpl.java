@@ -2,17 +2,21 @@ package edu.ustb.crypto.convention.proxy;
 
 import edu.ustb.crypto.convention.compile.entity.*;
 
-import java.util.List;
-
 /**
  * 对于私约和公约中同时存在的条款进行检查  条款覆盖关系
  *
  * @auther lwj
  * @date 2025/2/24 10:16
  */
-public class GeneralClauseInterfaceImpl implements TermInterface {
+public class GeneralTermInterfaceImpl implements TermInterface<GeneralTerm, GeneralClause> {
 
-
+    /**
+     * 检查公约和私约中的一般条款，给私约补全相应缺失条件
+     *
+     * @param generalTerm
+     * @param generalClause
+     * @return
+     */
     public GeneralTerm checkGeneral(GeneralTerm generalTerm, GeneralClause generalClause) {
         boolean preHandle = preHandle(generalTerm, generalClause);
         boolean process = process(generalTerm, generalClause);
@@ -67,7 +71,6 @@ public class GeneralClauseInterfaceImpl implements TermInterface {
      */
     @Override
     public boolean process(GeneralTerm generalTerm, GeneralClause generalClause) {
-        System.out.println("Checking " + generalTerm.getTermName() + " transaction");
         WhileStatement whileStatement_ct = generalTerm.getWhileStatement();
         WhileStatement whileStatement_cv = generalClause.getWhileStatement();
 

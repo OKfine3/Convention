@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BreachClause {
+public class BreachClause extends Clause {
     private String clauseName;
     private List<String> againstClauseName;
     private String partyName;

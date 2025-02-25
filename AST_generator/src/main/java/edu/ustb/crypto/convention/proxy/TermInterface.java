@@ -1,12 +1,13 @@
 package edu.ustb.crypto.convention.proxy;
 
-import edu.ustb.crypto.convention.compile.entity.GeneralClause;
-import edu.ustb.crypto.convention.compile.entity.GeneralTerm;
+import edu.ustb.crypto.convention.compile.entity.*;
 
-public interface TermInterface {
-    public boolean preHandle(GeneralTerm generalTerm, GeneralClause generalClause);
+public interface TermInterface<T extends Term, C extends Clause> {
+    public boolean preHandle(T term, C clause);
 
-    public boolean postHandle(GeneralTerm generalTerm, GeneralClause generalClause);
+    public boolean postHandle(T term, C clause);
 
-    public boolean process(GeneralTerm generalTerm, GeneralClause generalClause);
+    public boolean process(T term, C clause);
 }
+
+

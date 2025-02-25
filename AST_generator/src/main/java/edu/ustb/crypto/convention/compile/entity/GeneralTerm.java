@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GeneralTerm {
+public class GeneralTerm extends Term {
     private String termName;
     private String partyName;
     private String duty;

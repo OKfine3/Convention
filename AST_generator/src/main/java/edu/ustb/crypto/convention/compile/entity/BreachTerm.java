@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BreachTerm {
+public class BreachTerm extends Term {
     private String termName;
     private List<String> againstTermName;
     private String partyName;

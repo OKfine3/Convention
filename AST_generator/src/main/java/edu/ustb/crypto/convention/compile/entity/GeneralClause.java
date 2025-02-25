@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class GeneralClause {
+public class GeneralClause extends Clause {
     private String clauseName;
 
     private String partyName;

@@ -38,7 +38,7 @@ public class GeneralTermInterfaceImplTest {
         //公约条款存在 when\while
         GeneralClause generalClause = new TermClauseHandler().getClauseByAction(generalClauses, "deliverGoods");
 
-        GeneralTerm newGeneralTerm = new GeneralClauseInterfaceImpl().checkGeneral(generalTerm, generalClause);
+        GeneralTerm newGeneralTerm = new GeneralTermInterfaceImpl().checkGeneral(generalTerm, generalClause);
         System.out.println(newGeneralTerm);
 
     }
