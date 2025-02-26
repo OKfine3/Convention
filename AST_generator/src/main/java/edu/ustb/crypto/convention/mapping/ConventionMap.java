@@ -21,13 +21,12 @@ public class ConventionMap {
 
     /**
      * 创建映射表，其中 key 是公约中的对应信息，值此处设为 null,待后续私约填充
-     *
      * @param convention
      * @return
      */
     public Map<String, List<Pair<String, String>>> getConventionKey(Convention convention) {
         // 存放映射信息
-        Map<String, List<Pair<String, String>>> mapingTable = new HashMap<>();
+        Map<String, List<Pair<String, String>>> mappingTable = new LinkedHashMap<>();
 
         //取出公约中的party结构  partys : <Seller:field>
         Map<String, List<Pair<String, String>>> partys = convention.getPartys();
@@ -40,7 +39,7 @@ public class ConventionMap {
             Pair<String, String> pair = new Pair<>(mapName, null);
             partyPairs.add(pair);
         });
-        mapingTable.put("party", partyPairs);
+        mappingTable.put("party", partyPairs);
 
         //取出公约中的 asset 结构  assets : <Goods:field>
         Map<String, List<Pair<String, String>>> assets = convention.getAssets();
@@ -50,7 +49,7 @@ public class ConventionMap {
             Pair<String, String> pair = new Pair<>(key, null);
             assetPairs.add(pair);
         });
-        mapingTable.put("asset", assetPairs);
+        mappingTable.put("asset", assetPairs);
 
         //取出公约中的属性 addition 结构  additions : <addition:field>
         Map<String, List<Pair<String, String>>> additions = convention.getAdditions();
@@ -62,7 +61,7 @@ public class ConventionMap {
                 additionPairs.add(newPair);
             }
         });
-        mapingTable.put("attribute", additionPairs);
+        mappingTable.put("attribute", additionPairs);
 
         //提取公约中的 actionName
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
@@ -78,24 +77,20 @@ public class ConventionMap {
             Pair<String, String> pair = new Pair<>(actionName, null);
             actionPairs.add(pair);
         }
-        mapingTable.put("action", actionPairs);
-        return mapingTable;
+        mappingTable.put("action", actionPairs);
+        return mappingTable;
     }
 
     /**
      * 将公约中获取到的映射表中的key填入到mapping.yaml文件中
-     *
      * @param mappingTable
      * @param filePath
      */
     public void convertToYaml(Map<String, List<Pair<String, String>>> mappingTable, String filePath) {
         StringBuilder yamlContent = new StringBuilder();
-        //倒序遍历 mappingTable 中的内容，因为map.put是尾插入
-        List<Map.Entry<String, List<Pair<String, String>>>> entries = new ArrayList<>(mappingTable.entrySet());
-        Collections.reverse(entries);
 
         // 遍历Map并构建YAML内容
-        for (Map.Entry<String, List<Pair<String, String>>> entry : entries) {
+        for (Map.Entry<String, List<Pair<String, String>>> entry : mappingTable.entrySet()) {
             String key = entry.getKey();
             List<Pair<String, String>> pairs = entry.getValue();
 

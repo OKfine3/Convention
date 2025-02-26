@@ -1,0 +1,24 @@
+Buyer:
+  - account: 00002
+  - name: bob
+Seller:
+  - account: 00001
+  - name: alice
+Meat:
+  - quantity: 50
+  - price: 500
+addition:
+  - startDate: 2024-01-0200:00:00
+  - payDate: 2024-01-0200:00:00
+  - confirmDate: 2024-01-0200:00:00
+  - returnDate: 2024-01-0200:00:00
+  - lateCharge: 300
+  - payDuration: 10
+  - deliverDate: 2024-01-0200:00:00
+  - deliverDuration: 7
+  - payRate: 0.5
+action:
+  - buyMeat: null
+  - payDownpayed: null
+  - deliverMeat: null
+  - payBalance: null

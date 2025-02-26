@@ -24,7 +24,8 @@ public class ContractVisitorTest {
                         "    bind clause no1:\n" +
 //                        "        price * 2" +
                         "        downPayment <= price * 20\n" +
-                        "        rentDuration = 10 * rate\n" +
+//                        "        rentDuration = 10 * rate\n" +
+                        "        rentDuration < 20 \n" +
                         "        Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, HumanOrgans]");
         AttributeTreeNode attributeTreeNode = new ClauseVisitor().visitClause(parser.clause());
         System.out.println(attributeTreeNode);

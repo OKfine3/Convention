@@ -1,35 +1,37 @@
 contract SaleAndBuyContract constraint_by SaleAndBuyConvention{
 		party Seller{
-				account : 100
+				account : 00001
+				name : alice
 		}
 		party Buyer{
-				account : 100
+				account : 00002
+				name : bob
 		}
 
         asset Meat{
-			quantity : 101
-			price : 101
+			quantity : 50
+			price : 500
 		}
 
 
 		addition infos{
-			startTime : 2024-01-02 00:00:00
+			startDate : 2024-01-02 00:00:00
 			payDate : 2024-01-02 00:00:00
 			confirmDate : 2024-01-02 00:00:00
 			returnDate : 2024-01-02 00:00:00
-			latePaid : 101
-			payDuration : 2024-01-02 00:00:00
+			lateCharge : 300
+			payDuration : 10
 			deliverDate : 2024-01-02 00:00:00
-			deliverDuration : 2024-01-02 00:00:00
+			deliverDuration : 7
 			payRate : 0.5
 		}
 
 		@@买方可以购买货物
 		term no1:Buyer can buyMeat
-			where startTime = now and payDate = now + payDuration
+			where startDate = now and payDate = now + payDuration
 
 		@@买方应当于支付日期前向卖方支付定金（downPayment=price * payRate）
-		term no2:Buyer must payDownplayed
+		term no2:Buyer must payDownpayed
 			when after Buyer did buyMeat and before payDate
 			while transfer price * payRate to Seller
 			where deliverDate = now + deliverDuration

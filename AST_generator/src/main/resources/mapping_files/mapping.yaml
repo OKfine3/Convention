@@ -1,21 +1,31 @@
+# 键是公约内容，值是私约内容
+# 公约和私约名称建立映射；私约名称和值建立映射
+# action：筛选 action 值不为空的名称，对比公私约条款（此时涉及补充条件项后的变量名和原私约变量名称不匹配的问题）
+#        筛选 action 值为 REQUIRED，作为补充私约的条款（此时涉及补充后的条款多出来的变量）
+
 party:
-  - Buyer: null
-  - Seller: null
+  - Buyer: Buyer
+  - Seller: Seller
 asset:
-  - Goods: null
+  - Goods: Meat
 attribute:
-  - startTime: null
-  - payDate: null
-  - payAdvanceDate: null
-  - confirmDate: null
-  - returnDate: null
-  - latePaid: null
+  - startTime: startDate
+  - payDate: payDate
+  - payDuration: payDuration
+  - deliverDate: deliverDate
+  - deliverDuration: deliverDuration
+  - confirmDate: confirmDate
+  - refundDate: null
+  - refundDuration: null
+  - returnDate: returnDate
+  - latePaid: lateCharge
+  - downPayment: null
 action:
-  - buyGoods: null
-  - payAdvance: null
-  - deliverGoods: null
+  - buyGoods: buyMeat
+  - payPayment: null
+  - deliverGoods: deliverMeat
   - confirmReceiveAndPayBalance: null
-  - requireRefund: null
-  - returnGoods: null
-  - refund: null
+  - requireRefund: REQUIRE
+  - returnGoods: REQUIRE
+  - refund: REQUIRE
   - payLatePayment: null

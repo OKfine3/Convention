@@ -1,0 +1,26 @@
+party:
+  - Buyer: null
+  - Seller: null
+asset:
+  - Goods: null
+attribute:
+  - startTime: null
+  - payDate: null
+  - payDuration: null
+  - deliverDate: null
+  - deliverDuration: null
+  - confirmDate: null
+  - refundDate: null
+  - refundDuration: null
+  - returnDate: null
+  - latePaid: null
+  - downPayment: null
+action:
+  - buyGoods: null
+  - payPayment: null
+  - deliverGoods: null
+  - confirmReceiveAndPayBalance: null
+  - requireRefund: null
+  - returnGoods: null
+  - refund: null
+  - payLatePayment: null

@@ -7,18 +7,22 @@ convention SaleAndBuyConvention{
     }
 
     asset Goods{
-        advance:Money
-        deliverDate:Date
+        price:Money
         amount:Integer
     }
 
 	addition infos{
 		startTime:Date
 		payDate:Date
-		payAdvanceDate:Date
+		payDuration:Date
+		deliverDate:Date
+		deliverDuration:Date
 		confirmDate:Date
+		refundDate:Date
+		refundDuration:Date
 		returnDate:Date
 		latePaid:Money
+		downPayment:Money
 	}
 
     legalRight of ownershipRight under Art240:
@@ -35,15 +39,17 @@ convention SaleAndBuyConvention{
 
 	@@条款2：买受人可以开始购买货物
     clause no2:Buyer can exercise right buyGoods
+        where startDate = now and payDate = now + payDuration
 
-    @@条款3:买受人必须支付预付款
-	clause no3:Buyer must fulfil obligation payAdvance
-		when after Buyer did buyGoods and before payAdvanceDate
+    @@条款3:买受人须在开始购买货物后，付款截止日期前支付货款
+	clause no3:Buyer must fulfil obligation payPayment
+		when after Buyer did buyGoods and before payDate
 		while deposit advance
+		where deliverDate = now + deliverDuration
 
 	@@条款4：出卖人须在买方付款后，交付日期之前交付货物
     clause no4:Seller must fulfil obligation deliverGoods
-		when before deliverDate and after Buyer did payAdvance
+		when before deliverDate and after Buyer did payPayment
 		while transfer $goodsRight to Buyer
 
     @@条款5：买受人在收到货物后，确认收货日期前，并且未申请退款，需要确认收货并支付余款(when条件有些问题)
@@ -53,16 +59,17 @@ convention SaleAndBuyConvention{
 
 	@@条款6：买方可以申请退款(私约中缺失)
 	clause no6:Buyer can exercise right requireRefund
-		when after Seller did deliverGoods and before confirmDate
+		when after Seller did payPayment and before confirmDate
+		where refundDate = now + refundDuration
 
-	@@条款7：买方申请退款后，必须在一定时间内退回物品（顺应缺失,是需要与clause no5相关联出现的条款）
+	@@条款7：买方申请退款后，必须在一定时间内退回物品（顺应缺失,是需要与clause no6相关联出现的条款）
 	clause no7:Buyer must fulfil obligation returnGoods
 		when after Buyer did requireRefund and before returnDate
 		while transfer $goodsRight to Seller
 
 	@@条款8：出卖方在买受方退货后必须退款
 	clause no8:Seller must fulfil obligation refund
-		when after Buyer did returnGoods
+		when after Buyer did returnGoods and before refundDate
 		while transfer advance to Buyer
 
     @@违约条款9：如果买受人在支付日期确认收货日期前没有支付应付货款也没有退货，则需要缴纳滞纳金
