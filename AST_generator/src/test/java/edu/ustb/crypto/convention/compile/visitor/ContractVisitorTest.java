@@ -11,7 +11,7 @@ public class ContractVisitorTest {
 
     @Test
     public void ctxTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyContract.spesc");
         SpescParser.ContractDefinitionContext contractDefinitionContext = parser.contractDefinition();
         Contract contract = new ContractVisitor().visitContractDefinition(contractDefinitionContext);
         System.out.println(contract);

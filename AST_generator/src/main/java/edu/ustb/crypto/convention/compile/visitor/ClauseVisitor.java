@@ -81,6 +81,9 @@ public class ClauseVisitor extends SpescBaseVisitor<AttributeTreeNode> {
                 String partyName = factorBindContext.factor().partyName().getText();
                 bindClauseFactorBind.setPartyName(partyName);
                 if ("NOT_IN".equals(factorBindContext.lo_type().getText())) {
+                    bindClauseFactorBind.setIfNotIn(Boolean.FALSE);
+                }
+                if ("IN".equals(factorBindContext.lo_type().getText())) {
                     bindClauseFactorBind.setIfNotIn(Boolean.TRUE);
                 }
                 bindClauseFactorBind.setItemLimitationName(factorBindContext.itemLimitation().itemLimitationName().getText());

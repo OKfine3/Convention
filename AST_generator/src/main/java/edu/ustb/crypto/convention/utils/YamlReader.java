@@ -9,7 +9,6 @@ public class YamlReader {
 
     /**
      * 加载 yaml 文件
-     *
      * @param filePath
      * @param type
      * @param <T>

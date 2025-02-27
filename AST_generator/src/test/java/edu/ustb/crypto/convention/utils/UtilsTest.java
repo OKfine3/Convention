@@ -11,7 +11,7 @@ import static edu.ustb.crypto.convention.utils.YamlReader.loadYaml;
  */
 public class UtilsTest {
     @Test
-    public void yamlTest(String[] args) {
+    public void yamlTest() {
         String filePath = "mapping_files/conventionMapping.yaml"; // 替换为你的 YAML 文件路径
         // 解析为 Config 类型
         Mapping config = loadYaml(filePath, Mapping.class);

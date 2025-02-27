@@ -21,6 +21,7 @@ attribute:
   - returnDate: returnDate
   - latePaid: lateCharge
   - downPayment: null
+  - rentDuration: rentPeriod
 action:
   - buyGoods: buyMeat
   - payPayment: null

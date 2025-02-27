@@ -16,7 +16,7 @@ public class TermClauseHandlerTest {
 
     @Test
     public void getCondInClauseTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerConvention.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyConvention.spesc");
         Convention convention = (Convention) new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         GeneralClause deliverGoods = new TermClauseHandler().getClauseByAction(generalClauses, "deliverGoods");
@@ -27,7 +27,7 @@ public class TermClauseHandlerTest {
 
     @Test
     public void getCondInTermTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyContract.spesc");
         Contract contract = new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         List<GeneralTerm> generalTerms = contract.getGeneralTerms();
         GeneralTerm generalTerm = new TermClauseHandler().getTermByAction(generalTerms, "payDownplayed");
@@ -38,7 +38,7 @@ public class TermClauseHandlerTest {
 
     @Test
     public void getClauseByActionTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerConvention.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyConvention.spesc");
         Convention convention = (Convention) new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         GeneralClause deliverGoods = new TermClauseHandler().getClauseByAction(generalClauses, "deliverGoods");
@@ -48,7 +48,7 @@ public class TermClauseHandlerTest {
 
     @Test
     public void getTermByActionTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyContract.spesc");
         Contract contract = new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         List<GeneralTerm> generalTerms = contract.getGeneralTerms();
         GeneralTerm generalTerm = new TermClauseHandler().getTermByAction(generalTerms, "payDownplayed");

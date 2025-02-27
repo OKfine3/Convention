@@ -17,6 +17,7 @@ addition:
   - deliverDate: 2024-01-0200:00:00
   - deliverDuration: 7
   - payRate: 0.5
+  - rentPeriod: 20
 action:
   - buyMeat: null
   - payDownpayed: null

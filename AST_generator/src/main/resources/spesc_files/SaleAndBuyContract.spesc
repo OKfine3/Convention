@@ -24,6 +24,7 @@ contract SaleAndBuyContract constraint_by SaleAndBuyConvention{
 			deliverDate : 2024-01-02 00:00:00
 			deliverDuration : 7
 			payRate : 0.5
+			rentPeriod : 20
 		}
 
 		@@买方可以购买货物

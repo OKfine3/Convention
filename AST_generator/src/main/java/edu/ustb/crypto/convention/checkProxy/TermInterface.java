@@ -1,4 +1,4 @@
-package edu.ustb.crypto.convention.proxy;
+package edu.ustb.crypto.convention.checkProxy;
 
 import edu.ustb.crypto.convention.compile.entity.*;
 

@@ -1,4 +1,4 @@
-package edu.ustb.crypto.convention.proxy;
+package edu.ustb.crypto.convention.checkProxy;
 
 import edu.ustb.crypto.convention.analysis.Iterator;
 import edu.ustb.crypto.convention.compile.entity.Contract;
@@ -20,9 +20,9 @@ public class GeneralTermInterfaceImplTest {
 
     @Test
     public void preHandleTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyContract.spesc");
         Contract contract = new ContractVisitor().visitContractDefinition(parser.contractDefinition());
-        SpescParser parser1 = Iterator.getParser("spesc_files/SaleAndBuyerConvention.spesc");
+        SpescParser parser1 = Iterator.getParser("spesc_files/SaleAndBuyConvention.spesc");
         Convention convention = (Convention) new ContractVisitor().visitContractDefinition(parser1.contractDefinition());
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         List<GeneralTerm> generalTerms = contract.getGeneralTerms();

@@ -18,7 +18,7 @@ import java.util.Map;
 public class ConventionMapTest {
     @Test
     public void contractMappingTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerContract.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyContract.spesc");
         String str = "src/main/resources/mapping_files/contractMapping.yaml";
         Contract contract = new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         new ContractMap().buildContractMap(contract, str);
@@ -26,7 +26,7 @@ public class ConventionMapTest {
 
     @Test
     public void conventionMappingTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerConvention.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyConvention.spesc");
         Convention convention = (Convention) new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         Map<String, List<Pair<String, String>>> conventionKey = new ConventionMap().getConventionKey(convention);
         String filePath = "src/main/resources/mapping_files/conventionMapping.yaml";
@@ -35,7 +35,7 @@ public class ConventionMapTest {
 
     @Test
     public void keyTest() {
-        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyerConvention.spesc");
+        SpescParser parser = Iterator.getParser("spesc_files/SaleAndBuyConvention.spesc");
         Convention convention = (Convention) new ContractVisitor().visitContractDefinition(parser.contractDefinition());
         Map<String, List<Pair<String, String>>> conventionKey = new ConventionMap().getConventionKey(convention);
         System.out.println(conventionKey);

@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class TermClauseHandler {
 
-
     /**
      * 根据 action 名称获取对应的私约条款
      * (条款中应当不允许存在 actionName 重复的条款)
