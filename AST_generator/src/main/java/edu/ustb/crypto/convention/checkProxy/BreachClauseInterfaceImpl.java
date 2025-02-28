@@ -17,15 +17,15 @@ public class BreachClauseInterfaceImpl implements TermInterface<BreachTerm, Brea
         newBreachTerm = breachTerm;
 
         if (preHandle == true) {
-            System.out.println("该条款中，公约需要补全私约前置条件！");
+            System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全私约前置条件！");
             newBreachTerm.setWhenStatement(breachClause.getWhenStatement());
         }
         if (process == true) {
-            System.out.println("该条款中，公约需要补全伴随条件！");
+            System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全伴随条件！");
             newBreachTerm.setWhileStatement(breachClause.getWhileStatement());
         }
         if (postHandle == true) {
-            System.out.println("该条款中，公约需要补全后置条件！");
+            System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全后置条件！");
             newBreachTerm.setWhereStatement(breachClause.getWhereStatement());
         }
         return newBreachTerm;

@@ -30,6 +30,7 @@ public class ContractApplicationTest {
             String mappingFile = "mapping_files/mapping.yaml";
             String contractMappingFile = "mapping_files/contractMapping.yaml";
             Contract newContract = Analyzer.start(contract, convention, mappingFile, contractMappingFile);
+            System.out.println(newContract);
             //条款覆盖，变量检查等，获得最终的执行合约 TODO 论文中的内容实现（用前两步生成的合约进行规则逻辑的整合，生成新合约）
         }
         //建立映射关系

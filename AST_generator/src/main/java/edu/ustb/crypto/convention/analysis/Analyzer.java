@@ -1,7 +1,10 @@
 package edu.ustb.crypto.convention.analysis;
 
+import edu.ustb.crypto.convention.checkProxy.BreachClauseInterfaceImpl;
+import edu.ustb.crypto.convention.checkProxy.GeneralTermInterfaceImpl;
 import edu.ustb.crypto.convention.compile.entity.*;
 import edu.ustb.crypto.convention.config.Mapping;
+import edu.ustb.crypto.convention.contractUtils.TermClauseHandler;
 import edu.ustb.crypto.convention.exception.BindException;
 import edu.ustb.crypto.convention.utils.MappingProcessor;
 import edu.ustb.crypto.convention.utils.ParserUtil;
@@ -30,8 +33,8 @@ public class Analyzer {
      */
     public static Contract start(Contract contract, Convention convention, String mappingFile, String contractMappingFile) throws Exception {
         // the final contract
-        Contract res = new Contract();
-        res = contract;
+        Contract newContract = new Contract();
+        newContract = contract;
 
         // load mapping file to memory(ContractData)
         setMappingInfos(mappingFile);
@@ -40,14 +43,78 @@ public class Analyzer {
         Analyzer.setRuntimeContractData(contract);
 
         // check bind
-        checkConventionBind(convention, contract, contractMappingFile, res);
+        checkBindRule(convention, contract, contractMappingFile, newContract);
+
         // check clause
-        System.out.println(res);
-        return res;
+        checkCoverRule(convention, contract, newContract);
+
+//        System.out.println(newContract);
+        return newContract;
     }
 
-    //检查约束条款中的内容
-    private static void checkConventionBind(Convention convention, Contract contract, String contractMappingFile, Contract newContract) throws BindException {
+
+    /**
+     * 覆盖关系检查规则
+     *
+     * @param convention
+     * @param contract
+     * @param newContract
+     */
+    private static void checkCoverRule(Convention convention, Contract contract, Contract newContract) {
+
+        List<GeneralTerm> generalTerms = contract.getGeneralTerms();
+        List<BreachTerm> breachTerms = contract.getBreachTerms();
+        List<GeneralClause> generalClauses = convention.getGeneralClauses();
+        List<BreachClause> breachClauses = convention.getBreachClauses();
+
+        // 1.遍历 mapping 文件中的action内容，获取到 value 不为 null 且不为 REQUIRED的value ，即私约存在的actionName
+        LinkedHashMap<String, String> actionMap = ContractData.getActionMap();
+        actionMap.forEach((key, value) -> {
+            if (value != "null" && value != null && value != "REQUIRED") {
+                // 2.分别根据 actionName 获取到对应的条款，然后进行条款检查
+                // 2.1 检查一般条款
+                TermClauseHandler termClauseHandler = new TermClauseHandler();
+                if (generalTerms != null) {
+                    GeneralTerm generalTerm = termClauseHandler.getTermByAction(generalTerms, value);
+                    if (generalTerm != null) {
+                        GeneralClause generalClause = termClauseHandler.getClauseByAction(generalClauses, key);
+                        GeneralTerm newGeneralTerm = new GeneralTermInterfaceImpl().checkGeneral(generalTerm, generalClause);
+                        boolean isReplace = replaceGeneralTerm(newContract, newGeneralTerm, value);
+                        if (isReplace) {
+                            System.out.println("行为名称为" + value + "的一般条款替换成功！");
+                        }
+                    }
+                }
+
+                // 2.2 检查违约条款
+                if (breachTerms != null) {
+                    BreachTerm breachTerm = termClauseHandler.getTermByAction(breachTerms, value);
+                    if (breachTerm != null) {
+                        BreachClause breachClause = termClauseHandler.getClauseByAction(breachClauses, key);
+                        BreachTerm newBreachTerm = new BreachClauseInterfaceImpl().checkBreach(breachTerm, breachClause);
+                        boolean isReplace = replaceBreachTerm(newContract, newBreachTerm, value);
+                        if (isReplace) {
+                            System.out.println("行为名称为" + value + "的普通条款替换成功！");
+                        }
+                    }
+                }
+
+            }
+        });
+
+    }
+
+
+    /**
+     * 检查约束条款中的内容
+     *
+     * @param convention
+     * @param contract
+     * @param contractMappingFile
+     * @param newContract
+     * @throws BindException
+     */
+    private static void checkBindRule(Convention convention, Contract contract, String contractMappingFile, Contract newContract) throws BindException {
         List<BindClause> bindClauses = convention.getBindClauses();
         for (BindClause bindClause : bindClauses) {
             // 检查限制要素约束条件 eg. Good NOT_IN ProhibitedItems = [Firearms, Drugs, StolenGoods, HumanOrgans]
@@ -102,7 +169,7 @@ public class Analyzer {
                                     // TODO 修改私约属性为满足要求的值，并生效于新合约
                                     String p1_str = String.valueOf(p1);
                                     replaceAdditionValues(newContract, ctMappingText, p1_str);
-//                                    System.out.println("已将私约属性"+ctMappingText+"修改为要求值："+p1_str);
+                                    System.out.println("已将私约属性" + ctMappingText + "修改为要求值：" + p1_str);
                                     /*try {
                                         String p1_str=String.valueOf(p1);
                                         replaceAdditionValues(newContract,ctMappingText,p1_str);
@@ -118,22 +185,63 @@ public class Analyzer {
                     });
                 }
             }
-
         }
+    }
+
+    /**
+     * 替换新合约中的一般条款
+     *
+     * @param newContract
+     * @param newGeneralTerm
+     * @param actionName
+     * @return
+     */
+    public static boolean replaceGeneralTerm(Contract newContract, GeneralTerm newGeneralTerm, String actionName) {
+        List<GeneralTerm> generalTerms = newContract.getGeneralTerms();
+        for (GeneralTerm generalTerm : generalTerms) {
+            String action = generalTerm.getActionName();
+            if (action.equals(actionName)) {
+                generalTerms.remove(generalTerm);
+                generalTerms.add(newGeneralTerm);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 替换新合约中的违约条款
+     *
+     * @param newContract
+     * @param newBreachTerm
+     * @param actionName
+     * @return
+     */
+    public static boolean replaceBreachTerm(Contract newContract, BreachTerm newBreachTerm, String actionName) {
+        List<BreachTerm> breachTerms = newContract.getBreachTerms();
+        for (BreachTerm breachTerm : breachTerms) {
+            String action = breachTerm.getActionName();
+            if (action.equals(actionName)) {
+                breachTerms.remove(breachTerm);
+                breachTerms.add(newBreachTerm);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * 替换不符合公约约束的变量值
      *
-     * @param contract
+     * @param newContract
      * @param ctProName
      * @param replaceValue
      */
-    public static void replaceAdditionValues(Contract contract, String ctProName, String replaceValue) {
-        if (contract == null) {
+    public static void replaceAdditionValues(Contract newContract, String ctProName, String replaceValue) {
+        if (newContract == null) {
             return; // 如果 Contract 对象或 additions 为空，直接返回
         }
-        Map<String, List<Pair<String, String>>> additions = contract.getAdditions();
+        Map<String, List<Pair<String, String>>> additions = newContract.getAdditions();
         Set<Map.Entry<String, List<Pair<String, String>>>> entries = additions.entrySet();
         for (Map.Entry<String, List<Pair<String, String>>> entry : entries) {
             List<Pair<String, String>> pairs = entry.getValue();
@@ -148,13 +256,16 @@ public class Analyzer {
         }
     }
 
+    /**
+     * @param mapping_file_path
+     */
     private static void setMappingInfos(String mapping_file_path) {
         // get mapping file
         Mapping config = loadYaml(mapping_file_path, Mapping.class);
 
         // struct mapping & set ContractData
         List<Map<String, String>> party = config.getParty();
-        Map<String, String> partyMap = new HashMap<>();
+        LinkedHashMap<String, String> partyMap = new LinkedHashMap<>();
         for (Map<String, String> stringStringMap : party) {
             stringStringMap.forEach((key, value) -> {
                 partyMap.put(key, value);
@@ -163,7 +274,7 @@ public class Analyzer {
         ContractData.setPartyMap(partyMap);
 
         List<Map<String, String>> action = config.getAction();
-        Map<String, String> actionMap = new HashMap<>();
+        LinkedHashMap<String, String> actionMap = new LinkedHashMap<>();
         for (Map<String, String> stringStringMap : action) {
             stringStringMap.forEach((key, value) -> {
                 actionMap.put(key, value);
@@ -172,7 +283,7 @@ public class Analyzer {
         ContractData.setActionMap(actionMap);
 
         List<Map<String, String>> asset = config.getAsset();
-        Map<String, String> assetMap = new HashMap<>();
+        LinkedHashMap<String, String> assetMap = new LinkedHashMap<>();
         for (Map<String, String> stringStringMap : asset) {
             stringStringMap.forEach((key, value) -> {
                 assetMap.put(key, value);
@@ -181,7 +292,7 @@ public class Analyzer {
         ContractData.setAssetMap(assetMap);
 
         List<Map<String, String>> attribute = config.getAttribute();
-        Map<String, String> attributeMap = new HashMap<>();
+        LinkedHashMap<String, String> attributeMap = new LinkedHashMap<>();
         for (Map<String, String> stringStringMap : attribute) {
             stringStringMap.forEach((key, value) -> {
                 attributeMap.put(key, value);
@@ -198,11 +309,11 @@ public class Analyzer {
     public static void setRuntimeContractData(Contract res) {
         List<GeneralTerm> generalTerms = res.getGeneralTerms();
         String contractName = res.getContractName();
-        Map<String, List<Pair<String, String>>> additions = res.getAdditions();
-        Map<String, List<Pair<String, String>>> partys = res.getPartys();
-        Map<String, List<Pair<String, String>>> assetExtraProps = res.getAssetExtraProps();
+        LinkedHashMap<String, List<Pair<String, String>>> additions = res.getAdditions();
+        LinkedHashMap<String, List<Pair<String, String>>> partys = res.getPartys();
+        LinkedHashMap<String, List<Pair<String, String>>> assetExtraProps = res.getAssetExtraProps();
         String constrainttedContractName = res.getConstrainttedContractName();
-        Map<String, List<Pair<String, String>>> assets = res.getAssets();
+        LinkedHashMap<String, List<Pair<String, String>>> assets = res.getAssets();
 
         ContractData.contractName = res.getContractName();
         ContractData.setPartys(partys);

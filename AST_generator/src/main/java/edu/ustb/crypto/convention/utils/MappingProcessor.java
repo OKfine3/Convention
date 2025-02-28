@@ -17,7 +17,6 @@ public class MappingProcessor {
 
     /**
      * 根据约束条款中的变量名称，到公私约映射表中获取到对应的私约属性
-     *
      * @param text
      * @return
      */

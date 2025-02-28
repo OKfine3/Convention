@@ -12,7 +12,6 @@ public class GeneralTermInterfaceImpl implements TermInterface<GeneralTerm, Gene
 
     /**
      * 检查公约和私约中的一般条款，给私约补全相应缺失条件
-     *
      * @param generalTerm
      * @param generalClause
      * @return
@@ -26,15 +25,15 @@ public class GeneralTermInterfaceImpl implements TermInterface<GeneralTerm, Gene
         newGeneralTerm = generalTerm;
 
         if (preHandle == true) {
-            System.out.println("该条款中，公约需要补全私约前置条件！");
+            System.out.println("条款" + generalTerm.getActionName() + "，公约需要补全私约前置条件！");
             newGeneralTerm.setWhenStatement(generalClause.getWhenStatement());
         }
         if (process == true) {
-            System.out.println("该条款中，公约需要补全伴随条件！");
+            System.out.println("条款" + generalTerm.getActionName() + "，公约需要补全伴随条件！");
             newGeneralTerm.setWhileStatement(generalClause.getWhileStatement());
         }
         if (postHandle == true) {
-            System.out.println("该条款中，公约需要补全后置条件！");
+            System.out.println("条款" + generalTerm.getActionName() + "，公约需要补全后置条件！");
             newGeneralTerm.setWhereStatement(generalClause.getWhereStatement());
         }
         return newGeneralTerm;
@@ -91,7 +90,7 @@ public class GeneralTermInterfaceImpl implements TermInterface<GeneralTerm, Gene
      */
     @Override
     public boolean postHandle(GeneralTerm generalTerm, GeneralClause generalClause) {
-        System.out.println("Checking " + generalTerm.getTermName() + " postCondition");
+//        System.out.println("Checking " + generalTerm.getTermName() + " postCondition");
         WhereStatement whereStatement_ct = generalTerm.getWhereStatement();
         WhereStatement whereStatement_cv = generalClause.getWhereStatement();
         if (whereStatement_cv != null && whereStatement_ct != null) {

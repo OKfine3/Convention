@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.antlr.v4.runtime.misc.Pair;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,9 +26,9 @@ public class Convention extends Contract {
     List<BindClause> bindClauses;
     String conventionName;
 
-    Map<String, List<Pair<String, String>>> partys;
-    Map<String, List<Pair<String, String>>> assets;
-    Map<String, List<Pair<String, String>>> additions;
+    LinkedHashMap<String, List<Pair<String, String>>> partys;
+    LinkedHashMap<String, List<Pair<String, String>>> assets;
+    LinkedHashMap<String, List<Pair<String, String>>> additions;
     List<Objects> legalRights;
 
     final String _n = "\n";

@@ -8,10 +8,7 @@ import edu.ustb.crypto.convention.spescParser.SpescParser;
 import org.antlr.v4.runtime.misc.Pair;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @auther lwj
@@ -34,7 +31,7 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
 
         //设置Contract中的party内容
         SpescParser.ContractBodyContext contractBodyContext = ctx.contractBody();
-        HashMap<String, List<Pair<String, String>>> partyMap = new HashMap<>();
+        LinkedHashMap<String, List<Pair<String, String>>> partyMap = new LinkedHashMap<>();
         for (SpescParser.PartyContext partyContext: contractBodyContext.party()) {
             PartyVisitor partyVisitor = new PartyVisitor();
             AttributeTreeNode node = partyVisitor.visitParty(partyContext);
@@ -42,25 +39,25 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
             ArrayList<Pair<String,String>> pairs = new ArrayList<>();
             for (AttributeTreeNode child : node.getChildren()){
                 if(child.getType()== AttributeTypeEnum.Value){
-                    String nodeName=child.getNodeName();
-                    String value=child.getChildren().get(0).getNodeName();
-                    pairs.add(new Pair<>(nodeName,value));
+                    String nodeName = child.getNodeName();
+                    String value = child.getChildren().get(0).getNodeName();
+                    pairs.add(new Pair<>(nodeName, value));
                 }
             }
-            partyMap.put(partyName,pairs);
+            partyMap.put(partyName, pairs);
         }
         contract.setPartys(partyMap);
 
         //设置Contract中的asset内容
-        Map<String, List<Pair<String,String>>> assetMap = new HashMap<>();
-        Map<String, List<Pair<String,String>>> assetExtraProps = new HashMap<>();
+        LinkedHashMap<String, List<Pair<String, String>>> assetMap = new LinkedHashMap<>();
+        LinkedHashMap<String, List<Pair<String, String>>> assetExtraProps = new LinkedHashMap<>();
         for (SpescParser.AssetContext assetContext : contractBodyContext.asset()) {
             AssetVisitor assetVisitor = new AssetVisitor();
             AttributeTreeNode node = assetVisitor.visitAsset(assetContext);
             String assetName = node.getNodeName();
             ArrayList<Pair<String, String>> pairs = new ArrayList<>();
             for (AttributeTreeNode child : node.getChildren()) {
-                if(child.getType() == AttributeTypeEnum.Value){
+                if (child.getType() == AttributeTypeEnum.Value) {
                     String nodeName = child.getNodeName();
                     String value = child.getChildren().get(0).getNodeName();
                     pairs.add(new Pair<>(nodeName, value));
@@ -81,7 +78,7 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
         contract.setAssetExtraProps(assetExtraProps);
 
         //设置Contract中的addition内容
-        Map<String, List<Pair<String,String>>> additionMap = new HashMap<>();
+        LinkedHashMap<String, List<Pair<String, String>>> additionMap = new LinkedHashMap<>();
         for (SpescParser.AdditionContext additionContext : contractBodyContext.addition()) {
             AdditionVisitor additionVisitor = new AdditionVisitor();
             AttributeTreeNode node = additionVisitor.visitAddition(additionContext);

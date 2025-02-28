@@ -10,41 +10,28 @@ import java.util.List;
  */
 public class TermClauseHandler {
 
-    /**
-     * 根据 action 名称获取对应的私约条款
-     * (条款中应当不允许存在 actionName 重复的条款)
-     *
-     * @param generalTerms
-     * @param name
-     * @return
-     */
-    public GeneralTerm getTermByAction(List<GeneralTerm> generalTerms, String name) {
-        for (GeneralTerm generalTerm : generalTerms) {
-            String actionName = generalTerm.getActionName();
+
+    public <T extends Term> T getTermByAction(List<T> terms, String name) {
+        for (T term : terms) {
+            String actionName = term.getActionName();
             if (actionName.equals(name)) {
-                return generalTerm;
+                return term;
             }
         }
         // TODO 后续可能需要抛出异常信息
-        System.out.println("没有与 actionName 相匹配的条款");
+//        System.out.println("没有与 actionName 相匹配的条款");
         return null;
     }
 
-    /**
-     * 根据 action 名称获取对应的公约条款
-     *
-     * @param generalClauses
-     * @param name
-     * @return
-     */
-    public GeneralClause getClauseByAction(List<GeneralClause> generalClauses, String name) {
-        for (GeneralClause generalClause : generalClauses) {
-            String actionName = generalClause.getActionName();
+
+    public <C extends Clause> C getClauseByAction(List<C> clauses, String name) {
+        for (C clause : clauses) {
+            String actionName = clause.getActionName();
             if (actionName.equals(name)) {
-                return generalClause;
+                return clause;
             }
         }
-        System.out.println("没有与 actionName 相匹配的条款");
+//        System.out.println("没有与 actionName 相匹配的条款");
         return null;
     }
 

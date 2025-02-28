@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.Pair;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,16 +18,16 @@ public class Contract {
 
     String constrainttedContractName;
 
-    Map<String, List<Pair<String, String>>> partys;
+    LinkedHashMap<String, List<Pair<String, String>>> partys;
 
-    Map<String, List<Pair<String, String>>> assets;
-    Map<String, List<Pair<String, String>>> assetExtraProps;
+    LinkedHashMap<String, List<Pair<String, String>>> assets;
+    LinkedHashMap<String, List<Pair<String, String>>> assetExtraProps;
 
-    Map<String, List<Pair<String, String>>> additions;
+    LinkedHashMap<String, List<Pair<String, String>>> additions;
 
     List<GeneralTerm> generalTerms;
 
-    // TODO 违约条款
+    List<BreachTerm> breachTerms;
 
     // TODO 仲裁条款
 
@@ -113,6 +114,12 @@ public class Contract {
         if (generalTerms != null) {
             for (GeneralTerm generalTerm : generalTerms) {
                 res.append(generalTerm.toString());
+                res.append(_n);
+            }
+        }
+        if (breachTerms != null) {
+            for (BreachTerm breachTerm : breachTerms) {
+                res.append(breachTerm.toString());
                 res.append(_n);
             }
         }
