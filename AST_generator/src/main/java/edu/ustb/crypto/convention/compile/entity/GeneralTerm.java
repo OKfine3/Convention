@@ -57,7 +57,7 @@ public class GeneralTerm extends Term {
         }
         res.append(_n);
         if (whenStatement != null) {
-            res.append("when ");
+            res.append("\t\twhen ");
             List<String> whens = whenStatement.getOrExpression().getAndExpression()
                     .stream()
                     .map((item) -> item.getWhenGeneralExpression().toString()).collect(Collectors.toList());
@@ -70,7 +70,7 @@ public class GeneralTerm extends Term {
         }
 
         if (whileStatement != null) {
-            res.append("while ");
+            res.append("\t\twhile ");
             List<String> whiles = whileStatement.getOrExpression().getAndExpression()
                     .stream()
                     .map((item) -> item.getWhileGeneralExpression().toString()).collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class GeneralTerm extends Term {
         }
 
         if (whereStatement != null) {
-            res.append("where ");
+            res.append("\t\twhere ");
             List<String> wheres = whereStatement.getOrExpression().getAndExpression()
                     .stream()
                     .map((item) -> item.getWhereGeneralExpression().toString()).collect(Collectors.toList());

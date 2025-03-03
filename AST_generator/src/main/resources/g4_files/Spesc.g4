@@ -62,7 +62,7 @@ againstDeclaration : 'against' (TERM | CLAUSE) index ('and' CLAUSE index)*; //('
 
 controversy : 'arbitration term :' ( options {greedy=false;} : . )*?'administered by'; //greedy
 institution : 'institution'':' IDENTIFIER ;
-signature : SIGNATURE 'of'(PARTY | GROUP) IDENTIFIER COLON
+signature : SIGNATURE 'of'(PARTY | GROUP) IDENTIFIER
 	'{'
 	    'printedName' COLON ( (type | value ) ',' )?
 	    'signature' COLON ( (type | value ) ',')?

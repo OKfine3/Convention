@@ -6,12 +6,15 @@ import edu.ustb.crypto.convention.compile.entity.*;
 import edu.ustb.crypto.convention.config.Mapping;
 import edu.ustb.crypto.convention.contractUtils.TermClauseHandler;
 import edu.ustb.crypto.convention.exception.BindException;
+import edu.ustb.crypto.convention.utils.FileWriterUtils;
 import edu.ustb.crypto.convention.utils.MappingProcessor;
 import edu.ustb.crypto.convention.utils.ParserUtil;
 import org.antlr.v4.runtime.misc.Pair;
 
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static edu.ustb.crypto.convention.utils.YamlReader.loadYaml;
 
@@ -46,12 +49,106 @@ public class Analyzer {
         checkBindRule(convention, contract, contractMappingFile, newContract);
 
         // check clause
+        // 覆盖关系检查
         checkCoverRule(convention, contract, newContract);
+        //补全关系检查
+        checkSupplementalRules(convention, contract, newContract);
+
 
 //        System.out.println(newContract);
         return newContract;
     }
 
+    private static void checkSupplementalRules(Convention convention, Contract contract, Contract newContract) {
+        List<GeneralClause> generalClauses = convention.getGeneralClauses();
+        List<BreachClause> breachClauses = convention.getBreachClauses();
+
+        List<GeneralTerm> generalTerms = contract.getGeneralTerms();
+        List<BreachTerm> breachTerms = contract.getBreachTerms();
+        String termName = null;
+        if (breachTerms.size() > 0) {
+            BreachTerm breachTerm = breachTerms.get(breachTerms.size() - 1);
+            termName = breachTerm.getTermName();
+        }
+        if (generalTerms.size() > 0) {
+            GeneralTerm generalTerm = generalTerms.get(generalTerms.size() - 1);
+            termName = generalTerm.getTermName();
+        }
+
+        // 1.检查映射表，找到 action 中值为 “REQUIRED” 的公约行为名称
+        LinkedHashMap<String, String> actionMap = ContractData.getActionMap();
+        String finalTermName = termName;
+        String numPart = finalTermName.replaceAll("[^\\d]", "");
+        AtomicInteger no = new AtomicInteger(Integer.parseInt(numPart));
+        String letterPart = finalTermName.replaceAll("[0-9]", "");
+
+        actionMap.forEach((key, value) -> {
+            if (value != null) {
+                if (value.equals("REQUIRE") || value == "REQUIRE") {
+                    TermClauseHandler termClauseHandler = new TermClauseHandler();
+                    GeneralClause generalClause = termClauseHandler.getClauseByAction(generalClauses, key);
+                    BreachClause breachClause = termClauseHandler.getClauseByAction(breachClauses, key);
+
+                    // 2.如果该补全条款是一般条款，需要重新将公约条款内容按照私约条款语法进行赋值
+                    if (generalClause != null) {
+                        GeneralTerm generalTerm = new GeneralTerm();
+                        no.incrementAndGet();
+                        generalTerm.setTermName(letterPart + no.get());
+                        generalTerm.setPartyName(generalClause.getPartyName());
+                        if (generalClause.getDutyConditionType() == "mustfulfil obligation") {
+                            generalTerm.setDuty("must");
+                        } else if (generalClause.getDutyConditionType() == "canexercise right") {
+                            generalTerm.setDuty("can");
+                        }
+                        generalTerm.setActionName(generalClause.getActionName());
+                        generalTerm.setWhenStatement(generalClause.getWhenStatement());
+                        generalTerm.setWhileStatement(generalClause.getWhileStatement());
+                        generalTerm.setWhereStatement(generalClause.getWhereStatement());
+                        // 3.根据 1 中的 actionName 对应的条款，加入新合约
+                        addNewTerm(generalTerm, newContract);
+
+                    }
+                    if (breachClause != null) {
+                        BreachTerm breachTerm = new BreachTerm();
+                        no.incrementAndGet();
+                        breachTerm.setTermName(letterPart + no.get());
+                        breachTerm.setPartyName(breachClause.getPartyName());
+                        if (breachClause.getDutyConditionType() == "mustfulfil obligation") {
+                            breachTerm.setDuty("must");
+                        } else if (breachClause.getDutyConditionType() == "canexercise right") {
+                            breachTerm.setDuty("can");
+                        }
+                        breachTerm.setActionName(breachClause.getActionName());
+                        breachTerm.setWhenStatement(breachClause.getWhenStatement());
+                        breachTerm.setWhileStatement(breachClause.getWhileStatement());
+                        breachTerm.setWhereStatement(breachClause.getWhereStatement());
+                        // 3.根据 1 中的 actionName 对应的条款，加入新合约
+                        addNewTerm(breachTerm, newContract);
+                    }
+                }
+            }
+        });
+
+
+    }
+
+    /**
+     * 补全关系检查规则
+     *
+     * @param newTerm
+     * @param newContract
+     */
+    public static void addNewTerm(Term newTerm, Contract newContract) {
+        List<GeneralTerm> generalTerms = newContract.getGeneralTerms();
+        List<BreachTerm> breachTerms = newContract.getBreachTerms();
+
+        if (newTerm instanceof GeneralTerm) {
+            generalTerms.add((GeneralTerm) newTerm);
+        }
+        if (newTerm instanceof BreachTerm) {
+            breachTerms.add((BreachTerm) newTerm);
+        }
+    }
 
     /**
      * 覆盖关系检查规则
@@ -98,7 +195,6 @@ public class Analyzer {
                         }
                     }
                 }
-
             }
         });
 
@@ -198,11 +294,11 @@ public class Analyzer {
      */
     public static boolean replaceGeneralTerm(Contract newContract, GeneralTerm newGeneralTerm, String actionName) {
         List<GeneralTerm> generalTerms = newContract.getGeneralTerms();
-        for (GeneralTerm generalTerm : generalTerms) {
-            String action = generalTerm.getActionName();
+        for (int i = 0; i < generalTerms.size(); i++) {
+            String action = generalTerms.get(i).getActionName();
             if (action.equals(actionName)) {
-                generalTerms.remove(generalTerm);
-                generalTerms.add(newGeneralTerm);
+                generalTerms.remove(generalTerms.get(i));
+                generalTerms.add(i, newGeneralTerm);
                 return true;
             }
         }
@@ -219,11 +315,11 @@ public class Analyzer {
      */
     public static boolean replaceBreachTerm(Contract newContract, BreachTerm newBreachTerm, String actionName) {
         List<BreachTerm> breachTerms = newContract.getBreachTerms();
-        for (BreachTerm breachTerm : breachTerms) {
-            String action = breachTerm.getActionName();
+        for (int i = 0; i < breachTerms.size(); i++) {
+            String action = breachTerms.get(i).getActionName();
             if (action.equals(actionName)) {
-                breachTerms.remove(breachTerm);
-                breachTerms.add(newBreachTerm);
+                breachTerms.remove(breachTerms.get(i));
+                breachTerms.add(i, newBreachTerm);
                 return true;
             }
         }

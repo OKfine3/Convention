@@ -36,7 +36,7 @@ public class BreachTerm extends Term {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append("term");
+        res.append("breach term");
         res.append(separator);
         res.append(termName);
         res.append(separator);
@@ -67,7 +67,7 @@ public class BreachTerm extends Term {
         }
         res.append(_n);
         if (whenStatement != null) {
-            res.append("when ");
+            res.append("\t\twhen ");
             List<String> whens = whenStatement.getOrExpression().getAndExpression()
                     .stream()
                     .map((item) -> item.getWhenGeneralExpression().toString()).collect(Collectors.toList());
@@ -80,7 +80,7 @@ public class BreachTerm extends Term {
         }
 
         if (whileStatement != null) {
-            res.append("while ");
+            res.append("\t\twhile ");
             List<String> whiles = whileStatement.getOrExpression().getAndExpression()
                     .stream()
                     .map((item) -> item.getWhileGeneralExpression().toString()).collect(Collectors.toList());
@@ -91,7 +91,7 @@ public class BreachTerm extends Term {
         }
 
         if (whereStatement != null) {
-            res.append("where ");
+            res.append("\t\twhere ");
             List<String> wheres = whereStatement.getOrExpression().getAndExpression()
                     .stream()
                     .map((item) -> item.getWhereGeneralExpression().toString()).collect(Collectors.toList());

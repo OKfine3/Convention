@@ -3,6 +3,7 @@ package edu.ustb.crypto.convention.compile.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.LinkedHashMap;
@@ -31,6 +32,8 @@ public class Contract {
 
     // TODO 仲裁条款
 
+    LinkedHashMap<String, List<Pair<String, String>>> signatures;
+
     final String _n = "\n";
     final String separator = " ";
 
@@ -42,12 +45,14 @@ public class Contract {
         res.append(separator);
         res.append(contractName);
         res.append(separator);
+        res.append("constraint_by ");
+        res.append(constrainttedContractName);
         res.append("{");
         res.append(_n);
 
         // party
         partys.forEach((key, value) -> {
-            res.append("party");
+            res.append("\tparty");
             res.append(separator);
             String partyname = key;
             res.append(partyname);
@@ -57,19 +62,20 @@ public class Contract {
             for (Pair<String, String> pair : value) {
                 String prop = pair.a;
                 String val = pair.b;
+                res.append("\t\t");
                 res.append(prop);
                 res.append(":");
                 res.append(val);
                 res.append(_n);
             }
             res.append(_n);
-            res.append("}");
+            res.append("\t}");
             res.append(_n);
         });
 
         // asset
         assets.forEach((key, value) -> {
-            res.append("asset");
+            res.append("\tasset");
             res.append(separator);
             String partyname = key;
             res.append(partyname);
@@ -79,20 +85,21 @@ public class Contract {
             for (Pair<String, String> pair : value) {
                 String prop = pair.a;
                 String val = pair.b;
+                res.append("\t\t");
                 res.append(prop);
                 res.append(":");
                 res.append(val);
                 res.append(_n);
             }
             res.append(_n);
-            res.append("}");
+            res.append("\t}");
             res.append(_n);
         });
 
 
         // addition
         additions.forEach((key, value) -> {
-            res.append("addition");
+            res.append("\taddition");
             res.append(separator);
             String partyname = key;
             res.append(partyname);
@@ -102,27 +109,49 @@ public class Contract {
             for (Pair<String, String> pair : value) {
                 String prop = pair.a;
                 String val = pair.b;
+                res.append("\t\t");
                 res.append(prop);
                 res.append(":");
                 res.append(val);
                 res.append(_n);
             }
             res.append(_n);
-            res.append("}");
+            res.append("\t}");
             res.append(_n);
         });
         if (generalTerms != null) {
             for (GeneralTerm generalTerm : generalTerms) {
+                res.append("\t");
                 res.append(generalTerm.toString());
                 res.append(_n);
             }
         }
         if (breachTerms != null) {
             for (BreachTerm breachTerm : breachTerms) {
+                res.append("\t");
                 res.append(breachTerm.toString());
                 res.append(_n);
             }
         }
+
+        signatures.forEach((key, value) -> {
+            res.append("\tsignature of party ");
+            res.append(key);
+            res.append("{");
+            res.append(_n);
+            for (Pair<String, String> pair : value) {
+                String name = pair.a;
+                String val = pair.b;
+                res.append("\t\t");
+                res.append(name);
+                res.append(":");
+                res.append(val);
+                res.append(_n);
+            }
+            res.append("\t}");
+            res.append(_n);
+        });
+
         res.append("}");
         return res.toString();
     }

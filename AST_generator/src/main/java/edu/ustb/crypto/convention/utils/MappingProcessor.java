@@ -10,10 +10,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * @date 2024/6/16 14:36
  */
 public class MappingProcessor {
-    public static void main(String[] args) {
-        String str = "partyName";
-        getMappingText(str);
-    }
 
     /**
      * 根据约束条款中的变量名称，到公私约映射表中获取到对应的私约属性

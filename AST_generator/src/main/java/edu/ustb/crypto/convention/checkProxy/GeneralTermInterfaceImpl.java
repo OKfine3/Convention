@@ -93,7 +93,7 @@ public class GeneralTermInterfaceImpl implements TermInterface<GeneralTerm, Gene
 //        System.out.println("Checking " + generalTerm.getTermName() + " postCondition");
         WhereStatement whereStatement_ct = generalTerm.getWhereStatement();
         WhereStatement whereStatement_cv = generalClause.getWhereStatement();
-        if (whereStatement_cv != null && whereStatement_ct != null) {
+        if (whereStatement_cv != null && whereStatement_ct == null) {
             return true;
         }
 //        System.out.println(generalTerm.getTermName() + "不存在 postCondition ");

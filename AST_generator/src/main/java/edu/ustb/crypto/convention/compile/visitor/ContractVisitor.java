@@ -83,16 +83,18 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
             AdditionVisitor additionVisitor = new AdditionVisitor();
             AttributeTreeNode node = additionVisitor.visitAddition(additionContext);
             String name = node.getNodeName();
-            List<Pair<String,String>> pairs = new ArrayList<>();
+            List<Pair<String, String>> pairs = new ArrayList<>();
             for (AttributeTreeNode child : node.getChildren()) {
                 String key = child.getNodeName();
                 String value = child.getChildren().get(0).getNodeName();
-                pairs.add(new Pair<>(key,value));
+                pairs.add(new Pair<>(key, value));
             }
-            additionMap.put(name,pairs);
+            additionMap.put(name, pairs);
         }
         contract.setAdditions(additionMap);
-        if(contract.getContractType().equals("contract")){
+
+        // 设置 Contract 中的 generalTerm 和 breachTerm 内容
+        if (contract.getContractType().equals("contract")) {
             List<GeneralTerm> generalTerms = new ArrayList<>();
             for (SpescParser.TermContext termContext : contractBodyContext.term()) {
                 TermVisitor termVisitor = new TermVisitor();
@@ -105,9 +107,42 @@ public class ContractVisitor extends SpescBaseVisitor<Contract> {
                 }
             }
             contract.setGeneralTerms(generalTerms);
+
+            List<BreachTerm> breachTerms = new ArrayList<>();
+            for (SpescParser.TermContext termContext : contractBodyContext.term()) {
+                TermVisitor termVisitor = new TermVisitor();
+                AttributeTreeNode node = termVisitor.visitTerm(termContext);
+                Object object = node.getObject();
+                GeneralTerm breachTerm = null;
+                if (object instanceof BreachTerm) {
+                    breachTerm = (GeneralTerm) object;
+                    generalTerms.add(breachTerm);
+                }
+            }
+            contract.setBreachTerms(breachTerms);
+
+            //设置 Contract 中的 signature 内容
+            LinkedHashMap<String, List<Pair<String, String>>> signatureMap = new LinkedHashMap<>();
+            for (SpescParser.SignatureContext signatureContext : contractBodyContext.signature()) {
+                SignatureVisitor signatureVisitor = new SignatureVisitor();
+                AttributeTreeNode node = signatureVisitor.visitSignature(signatureContext);
+                String signatureName = node.getNodeName();
+                List<AttributeTreeNode> children = node.getChildren();
+                String printName = children.get(0).getNodeName();
+                String signatureNum = children.get(1).getNodeName();
+                String date = children.get(2).getNodeName();
+                ArrayList<Pair<String, String>> pairs = new ArrayList<>();
+                pairs.add(new Pair<>("printedName", printName));
+                pairs.add(new Pair<>("signature", signatureNum));
+                pairs.add(new Pair<>("date", date));
+                signatureMap.put(signatureName, pairs);
+            }
+            contract.setSignatures(signatureMap);
+
+            // TODO 缺少仲裁条款
             return contract;
 
-            //TODO 缺少违约条款和仲裁条款
+
         } else { //公约
             Convention convention = (Convention) contract;
             String conventionName = ctx.IDENTIFIER().get(0).getText();

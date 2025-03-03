@@ -15,7 +15,7 @@ public class ParserUtil {
      * @param statement
      * @return
      */
-    static public SpescParser getParser(String statement) {
+    public static SpescParser getParser(String statement) {
         CharStream charStream = CharStreams.fromString(statement);
         SpescLexer lexer = new SpescLexer(charStream);    // create lexer (pass spesc into it)
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -25,7 +25,6 @@ public class ParserUtil {
 
     /**
      * 关系表达式 比较
-     *
      * @param a
      * @param b
      * @param operator
