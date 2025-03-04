@@ -1,0 +1,68 @@
+contract SaleAndBuyContract constraint_by SaleAndBuyConvention{
+	party Seller {
+		account:00001
+		name:alice
+
+	}
+	party Buyer {
+		account:00002
+		name:bob
+
+	}
+	asset Meat {
+		quantity:50
+		price:500
+
+	}
+	addition infos {
+		startDate:2024-01-02 00:00:00
+		payDate:2024-01-02 00:00:00
+		confirmDate:2024-01-02 00:00:00
+		returnDate:2024-01-02 00:00:00
+		lateCharge:300
+		payDuration:10
+		deliverDate:2024-01-02 00:00:00
+		deliverDuration:7
+		payRate:0.5
+		rentPeriod:10.0
+
+	}
+	term no1 : Buyer can buyMeat()
+		where startDate = now and payDate = now+payDuration
+
+	term no2 : Buyer must payDownpayed()
+		when after Buyer did buyMeat and before payDate
+		while transfer price*payRate to Seller
+		where deliverDate = now+deliverDuration
+
+	term no3 : Seller must deliverMeat()
+		when before deliverDate and after Buyer did payPayment
+		while transfer $meatRight to Buyer
+
+	term no4 : Buyer must payBalance()
+		when within 10 day after Seller did deliverMeat
+		while transfer (1-payRate)*price to Seller
+
+	term no5 : Buyer can requireRefund
+		when after Seller did payPayment and before confirmDate
+		where refundDate = now+refundDuration
+
+	term no6 : Buyer must returnGoods
+		when after Buyer did requireRefund and before returnDate
+		while transfer $goodsRight to Seller
+
+	term no7 : Seller must refund
+		when after Buyer did returnGoods and before refundDate
+		while transfer advance to Buyer
+
+	signature of party Buyer{
+		printedName:li
+		signature:2343214
+		date:2024/01/02
+	}
+	signature of party Seller{
+		printedName:li
+		signature:2343214
+		date:2024/01/02
+	}
+}

@@ -59,6 +59,13 @@ public class Analyzer {
         return newContract;
     }
 
+    /**
+     * 补全关系检查
+     *
+     * @param convention
+     * @param contract
+     * @param newContract
+     */
     private static void checkSupplementalRules(Convention convention, Contract contract, Contract newContract) {
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         List<BreachClause> breachClauses = convention.getBreachClauses();
@@ -95,9 +102,9 @@ public class Analyzer {
                         no.incrementAndGet();
                         generalTerm.setTermName(letterPart + no.get());
                         generalTerm.setPartyName(generalClause.getPartyName());
-                        if (generalClause.getDutyConditionType() == "mustfulfil obligation") {
+                        if (generalClause.getDutyConditionType().equals("mustfulfil obligation") || generalClause.getDutyConditionType() == "mustfulfil obligation") {
                             generalTerm.setDuty("must");
-                        } else if (generalClause.getDutyConditionType() == "canexercise right") {
+                        } else if (generalClause.getDutyConditionType().equals("canexercise right") || generalClause.getDutyConditionType() == "canexercise right") {
                             generalTerm.setDuty("can");
                         }
                         generalTerm.setActionName(generalClause.getActionName());

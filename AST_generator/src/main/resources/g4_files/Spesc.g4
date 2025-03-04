@@ -352,7 +352,7 @@ comment: COMMENT_TEXT;
 COMMENT_TEXT: '@@' ~[\r\n]* ; // 匹配非换行符的所有字符 // 匹配非换行符的所有字符
 
 // 时间变量
-date :  NUMBER '-' NUMBER '-' NUMBER NUMBER ':' NUMBER ':' NUMBER;
+date :  NUMBER '-' NUMBER '-' NUMBER (NUMBER ':' NUMBER ':' NUMBER)?;
 
 /*Contract Keyword Tokens */
 PACKAGE : 'package';
