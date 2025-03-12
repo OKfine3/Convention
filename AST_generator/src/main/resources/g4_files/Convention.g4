@@ -1,2 +1,0 @@
-grammar Convention;
-import commons;
