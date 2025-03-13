@@ -31,7 +31,7 @@ public class ContractApplicationTest {
             String contractMappingFile = "mapping_files/contractMapping.yaml";
             Contract newContract = Analyzer.start(contract, convention, mappingFile, contractMappingFile);
             System.out.println(newContract);
-            String newFilePath = "src/main/resources/spesc_files/newContract.spesc";
+            String newFilePath = "src/main/resources/pesc_files/newContract.spesc";
 //            String newFilePath="D:\\laboratory\\Convention_lwj\\AST_generator\\src\\main\\resources\\spesc_files\\newContract.spesc";
             new FileWriterUtils().generateContract(newContract, newFilePath);
 
