@@ -1,12 +1,11 @@
 package edu.ustb.crypto.convention.analysis;
 
 import edu.ustb.crypto.convention.checkProxy.BreachClauseInterfaceImpl;
-import edu.ustb.crypto.convention.checkProxy.GeneralTermInterfaceImpl;
+import edu.ustb.crypto.convention.checkProxy.GeneralClauseInterfaceImpl;
 import edu.ustb.crypto.convention.compile.entity.*;
 import edu.ustb.crypto.convention.config.Mapping;
 import edu.ustb.crypto.convention.contractUtils.TermClauseHandler;
 import edu.ustb.crypto.convention.exception.BindException;
-import edu.ustb.crypto.convention.utils.FileWriterUtils;
 import edu.ustb.crypto.convention.utils.MappingProcessor;
 import edu.ustb.crypto.convention.utils.ParserUtil;
 import org.antlr.v4.runtime.misc.Pair;
@@ -14,7 +13,6 @@ import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static edu.ustb.crypto.convention.utils.YamlReader.loadYaml;
 
@@ -52,7 +50,7 @@ public class Analyzer {
         // 覆盖关系检查
         checkCoverRule(convention, contract, newContract);
         //补全关系检查
-        checkSupplementalRules(convention, contract, newContract);
+        checkSupplementalRule(convention, contract, newContract);
 
 
 //        System.out.println(newContract);
@@ -66,7 +64,7 @@ public class Analyzer {
      * @param contract
      * @param newContract
      */
-    private static void checkSupplementalRules(Convention convention, Contract contract, Contract newContract) {
+    private static void checkSupplementalRule(Convention convention, Contract contract, Contract newContract) {
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         List<BreachClause> breachClauses = convention.getBreachClauses();
 
@@ -135,8 +133,6 @@ public class Analyzer {
                 }
             }
         });
-
-
     }
 
     /**
@@ -171,7 +167,7 @@ public class Analyzer {
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         List<BreachClause> breachClauses = convention.getBreachClauses();
 
-        // 1.遍历 mapping 文件中的action内容，获取到 value 不为 null 且不为 REQUIRED的value ，即私约存在的actionName
+        // 1.遍历 mapping 文件中的action内容，获取到 value 不为 null 且不为 REQUIRED 的 value ，即私约存在的 actionName
         LinkedHashMap<String, String> actionMap = ContractData.getActionMap();
         actionMap.forEach((key, value) -> {
             if (value != "null" && value != null && value != "REQUIRED") {
@@ -182,7 +178,7 @@ public class Analyzer {
                     GeneralTerm generalTerm = termClauseHandler.getTermByAction(generalTerms, value);
                     if (generalTerm != null) {
                         GeneralClause generalClause = termClauseHandler.getClauseByAction(generalClauses, key);
-                        GeneralTerm newGeneralTerm = new GeneralTermInterfaceImpl().checkGeneral(generalTerm, generalClause);
+                        GeneralTerm newGeneralTerm = new GeneralClauseInterfaceImpl().checkGeneral(generalTerm, generalClause);
                         boolean isReplace = replaceGeneralTerm(newContract, newGeneralTerm, value);
                         if (isReplace) {
                             System.out.println("行为名称为" + value + "的一般条款替换成功！");

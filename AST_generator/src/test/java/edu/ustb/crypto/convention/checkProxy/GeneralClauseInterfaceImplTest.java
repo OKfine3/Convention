@@ -16,7 +16,7 @@ import java.util.List;
  * @auther lwj
  * @date 2025/2/24 10:23
  */
-public class GeneralTermInterfaceImplTest {
+public class GeneralClauseInterfaceImplTest {
 
     @Test
     public void preHandleTest() {
@@ -38,7 +38,7 @@ public class GeneralTermInterfaceImplTest {
         //公约条款存在 when\while
         GeneralClause generalClause = new TermClauseHandler().getClauseByAction(generalClauses, "deliverGoods");
 
-        GeneralTerm newGeneralTerm = new GeneralTermInterfaceImpl().checkGeneral(generalTerm, generalClause);
+        GeneralTerm newGeneralTerm = new GeneralClauseInterfaceImpl().checkGeneral(generalTerm, generalClause);
         System.out.println(newGeneralTerm);
 
     }

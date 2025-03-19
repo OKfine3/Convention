@@ -8,10 +8,11 @@ import edu.ustb.crypto.convention.compile.entity.*;
  * @auther lwj
  * @date 2025/2/24 10:16
  */
-public class GeneralTermInterfaceImpl implements TermInterface<GeneralTerm, GeneralClause> {
+public class GeneralClauseInterfaceImpl implements ClauseInterface<GeneralTerm, GeneralClause> {
 
     /**
      * 检查公约和私约中的一般条款，给私约补全相应缺失条件
+     *
      * @param generalTerm
      * @param generalClause
      * @return

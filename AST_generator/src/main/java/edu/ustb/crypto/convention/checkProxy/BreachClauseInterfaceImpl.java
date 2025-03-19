@@ -6,7 +6,7 @@ import edu.ustb.crypto.convention.compile.entity.*;
  * @auther lwj
  * @date 2025/2/25 14:59
  */
-public class BreachClauseInterfaceImpl implements TermInterface<BreachTerm, BreachClause> {
+public class BreachClauseInterfaceImpl implements ClauseInterface<BreachTerm, BreachClause> {
 
     public BreachTerm checkBreach(BreachTerm breachTerm, BreachClause breachClause) {
         boolean preHandle = preHandle(breachTerm, breachClause);
