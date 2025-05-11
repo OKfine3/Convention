@@ -602,26 +602,53 @@ public class SpescBaseListener implements SpescListener {
 	@Override public void exitBoundedTimePredicate(SpescParser.BoundedTimePredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTimeConstant(SpescParser.TimeConstantContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTimeConstant(SpescParser.TimeConstantContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterTimeConstant(SpescParser.TimeConstantContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitTimeConstant(SpescParser.TimeConstantContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterAttribute(SpescParser.AttributeContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitAttribute(SpescParser.AttributeContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx) { }
 	/**
@@ -1348,16 +1375,22 @@ public class SpescBaseListener implements SpescListener {
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAccordTo(SpescParser.AccordToContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAccordTo(SpescParser.AccordToContext ctx) { }
-	/**
-	 * {@inheritDoc}
+     */
+    @Override
+    public void enterAccordTo(SpescParser.AccordToContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitAccordTo(SpescParser.AccordToContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * <p>The default implementation does nothing.</p>
      */
@@ -1405,14 +1438,18 @@ public class SpescBaseListener implements SpescListener {
      * {@inheritDoc}
      *
      * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRightName(SpescParser.RightNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLawName(SpescParser.LawNameContext ctx) {
+     */
+    @Override
+    public void exitRightName(SpescParser.RightNameContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterLawName(SpescParser.LawNameContext ctx) {
     }
 
     /**
@@ -1457,17 +1494,22 @@ public class SpescBaseListener implements SpescListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
-    public void exitImpldeclaration(SpescParser.ImpldeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterValue(SpescParser.ValueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+    public void exitImpldeclaration(SpescParser.ImpldeclarationContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterValue(SpescParser.ValueContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitValue(SpescParser.ValueContext ctx) { }
 	/**

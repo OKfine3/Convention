@@ -353,26 +353,49 @@ public class SpescBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitBoundedTimePredicate(SpescParser.BoundedTimePredicateContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitTimeConstant(SpescParser.TimeConstantContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
+     */
+    @Override
+    public T visitBoundedTimePredicate(SpescParser.BoundedTimePredicateContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitTimeConstant(SpescParser.TimeConstantContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitAttribute(SpescParser.AttributeContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitTimePointExpression(SpescParser.TimePointExpressionContext ctx) { return visitChildren(ctx); }
@@ -781,19 +804,25 @@ public class SpescBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOnTheObject(SpescParser.OnTheObjectContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitLawSource(SpescParser.LawSourceContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
+	@Override public T visitOnTheObject(SpescParser.OnTheObjectContext ctx) { return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitLawSource(SpescParser.LawSourceContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
     public T visitAccordTo(SpescParser.AccordToContext ctx) {
@@ -878,16 +907,20 @@ public class SpescBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
     }
 
     /**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitIndex(SpescParser.IndexContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitIndex(SpescParser.IndexContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitDecimal(SpescParser.DecimalContext ctx) { return visitChildren(ctx); }

@@ -105,10 +105,11 @@ timeExpression :  timePeriodExpression;
 //时间段表达式
 timePeriodExpression : boundedTimePredicate | timePredicate;
 timePredicate : timePointExpression  (isOrNot  timePredicateOperator timePointExpression)?;//可能还需要扩展，
-boundedTimePredicate : (WITHIN timeConstant)? timePredicateOperator timePointExpression;
+boundedTimePredicate : (WITHIN? timeConstant)? timePredicateOperator timePointExpression;
 
 //时间常量
-timeConstant : rule_INTEGER timeConstantUnit;
+timeConstant : (rule_INTEGER timeConstantUnit | attribute);
+attribute : IDENTIFIER;
 //rule_INTEGER :  '-'? NUMBER;
 
 

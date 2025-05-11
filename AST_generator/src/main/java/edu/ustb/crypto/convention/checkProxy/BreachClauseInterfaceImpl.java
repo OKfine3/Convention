@@ -1,14 +1,17 @@
 package edu.ustb.crypto.convention.checkProxy;
 
 import edu.ustb.crypto.convention.compile.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @auther lwj
  * @date 2025/2/25 14:59
  */
 public class BreachClauseInterfaceImpl implements ClauseInterface<BreachTerm, BreachClause> {
+    private static final Logger logger = LoggerFactory.getLogger(BreachClauseInterfaceImpl.class);
 
-    public BreachTerm checkBreach(BreachTerm breachTerm, BreachClause breachClause) {
+    public BreachTerm checkBreach(BreachTerm breachTerm, BreachClause breachClause, String termName) {
         boolean preHandle = preHandle(breachTerm, breachClause);
         boolean process = process(breachTerm, breachClause);
         boolean postHandle = postHandle(breachTerm, breachClause);
@@ -17,15 +20,17 @@ public class BreachClauseInterfaceImpl implements ClauseInterface<BreachTerm, Br
         newBreachTerm = breachTerm;
 
         if (preHandle == true) {
-            System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全私约前置条件！");
+            logger.info("The [precondition] for the [breach term {} : {}] is missing and needs to be supplemented by the convention.", termName, breachTerm.getActionName());
+//            System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全私约前置条件！");
             newBreachTerm.setWhenStatement(breachClause.getWhenStatement());
         }
         if (process == true) {
+            logger.info("The [transaction] for the [breach term {} : {}] is missing and needs to be supplemented by the convention.", termName, breachTerm.getActionName());
             System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全伴随条件！");
             newBreachTerm.setWhileStatement(breachClause.getWhileStatement());
         }
         if (postHandle == true) {
-            System.out.println("条款" + breachTerm.getActionName() + "，公约需要补全后置条件！");
+            logger.info("The [postcondition] for the [breach term {} : {}] is missing and needs to be supplemented by the convention.", termName, breachTerm.getActionName());
             newBreachTerm.setWhereStatement(breachClause.getWhereStatement());
         }
         return newBreachTerm;

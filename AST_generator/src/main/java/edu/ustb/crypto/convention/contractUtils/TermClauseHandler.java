@@ -35,6 +35,12 @@ public class TermClauseHandler {
         return null;
     }
 
+    public String getTermNameByAction() {
+
+        return null;
+
+    }
+
     /**
      * 获取私约条款中的条件
      *

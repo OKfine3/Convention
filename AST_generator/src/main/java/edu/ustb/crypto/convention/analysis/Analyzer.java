@@ -9,6 +9,8 @@ import edu.ustb.crypto.convention.exception.BindException;
 import edu.ustb.crypto.convention.utils.MappingProcessor;
 import edu.ustb.crypto.convention.utils.ParserUtil;
 import org.antlr.v4.runtime.misc.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.*;
@@ -22,6 +24,13 @@ import static edu.ustb.crypto.convention.utils.YamlReader.loadYaml;
  * @date 2025/2/26 21:29
  */
 public class Analyzer {
+
+    static Logger logger = LoggerFactory.getLogger(Analyzer.class);
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_MAGENTA = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RED = "\u001B[31m";
 
     /**
      * 加载映射文件
@@ -65,6 +74,7 @@ public class Analyzer {
      * @param newContract
      */
     private static void checkSupplementalRule(Convention convention, Contract contract, Contract newContract) {
+        logger.info("Start the supplement rule check.");
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
         List<BreachClause> breachClauses = convention.getBreachClauses();
 
@@ -111,16 +121,21 @@ public class Analyzer {
                         generalTerm.setWhereStatement(generalClause.getWhereStatement());
                         // 3.根据 1 中的 actionName 对应的条款，加入新合约
                         addNewTerm(generalTerm, newContract);
+//                        logger.info("The general [term {} : {}] has been Supplemented.",generalTerm.getTermName(),generalTerm.getActionName());
+                        logger.info("The general [term {} : {}] has been Supplemented.",
+                                ANSI_GREEN + generalTerm.getTermName() + ANSI_RESET,
+                                ANSI_MAGENTA + generalTerm.getActionName() + ANSI_RESET);
 
                     }
                     if (breachClause != null) {
                         BreachTerm breachTerm = new BreachTerm();
                         no.incrementAndGet();
                         breachTerm.setTermName(letterPart + no.get());
+                        breachTerm.setAgainstTermName(breachClause.getAgainstClauseName());
                         breachTerm.setPartyName(breachClause.getPartyName());
-                        if (breachClause.getDutyConditionType() == "mustfulfil obligation") {
+                        if (breachClause.getDutyConditionType().equals("mustfulfil obligation") || breachClause.getDutyConditionType() == "mustfulfil obligation") {
                             breachTerm.setDuty("must");
-                        } else if (breachClause.getDutyConditionType() == "canexercise right") {
+                        } else if (breachClause.getDutyConditionType().equals("canexercise right") || breachClause.getDutyConditionType() == "canexercise right") {
                             breachTerm.setDuty("can");
                         }
                         breachTerm.setActionName(breachClause.getActionName());
@@ -129,10 +144,15 @@ public class Analyzer {
                         breachTerm.setWhereStatement(breachClause.getWhereStatement());
                         // 3.根据 1 中的 actionName 对应的条款，加入新合约
                         addNewTerm(breachTerm, newContract);
+                        logger.info("The breach [term {} : {}] has been Supplemented.",
+                                ANSI_GREEN + breachTerm.getTermName() + ANSI_RESET,
+                                ANSI_MAGENTA + breachTerm.getActionName() + ANSI_RESET);
+
                     }
                 }
             }
         });
+        logger.info("End the supplement rule check.");
     }
 
     /**
@@ -161,7 +181,7 @@ public class Analyzer {
      * @param newContract
      */
     private static void checkCoverRule(Convention convention, Contract contract, Contract newContract) {
-
+        logger.info("Start the coverage rule check.");
         List<GeneralTerm> generalTerms = contract.getGeneralTerms();
         List<BreachTerm> breachTerms = contract.getBreachTerms();
         List<GeneralClause> generalClauses = convention.getGeneralClauses();
@@ -176,12 +196,18 @@ public class Analyzer {
                 TermClauseHandler termClauseHandler = new TermClauseHandler();
                 if (generalTerms != null) {
                     GeneralTerm generalTerm = termClauseHandler.getTermByAction(generalTerms, value);
+//                    System.out.println("Term:"+generalTerm);
                     if (generalTerm != null) {
                         GeneralClause generalClause = termClauseHandler.getClauseByAction(generalClauses, key);
-                        GeneralTerm newGeneralTerm = new GeneralClauseInterfaceImpl().checkGeneral(generalTerm, generalClause);
+                        String termName = generalTerm.getTermName();
+                        GeneralTerm newGeneralTerm = new GeneralClauseInterfaceImpl().checkGeneral(generalTerm, generalClause, termName);
+//                        System.out.println("newTerm:"+newGeneralTerm);
                         boolean isReplace = replaceGeneralTerm(newContract, newGeneralTerm, value);
+//                        System.out.println("True Or False:"+generalTerm.equals(newGeneralTerm));
                         if (isReplace) {
-                            System.out.println("行为名称为" + value + "的一般条款替换成功！");
+//                            logger.info("The general term [{}] has been replaced successfully.", termName);
+                            logger.info("The general term [{}] has been replaced successfully.",
+                                    ANSI_GREEN + termName + ANSI_RESET);
                         }
                     }
                 }
@@ -191,15 +217,20 @@ public class Analyzer {
                     BreachTerm breachTerm = termClauseHandler.getTermByAction(breachTerms, value);
                     if (breachTerm != null) {
                         BreachClause breachClause = termClauseHandler.getClauseByAction(breachClauses, key);
-                        BreachTerm newBreachTerm = new BreachClauseInterfaceImpl().checkBreach(breachTerm, breachClause);
+                        String termName = breachTerm.getTermName();
+                        BreachTerm newBreachTerm = new BreachClauseInterfaceImpl().checkBreach(breachTerm, breachClause, termName);
                         boolean isReplace = replaceBreachTerm(newContract, newBreachTerm, value);
-                        if (isReplace) {
-                            System.out.println("行为名称为" + value + "的普通条款替换成功！");
+                        if (isReplace && !breachTerm.equals(newBreachTerm)) {
+//                            logger.info("The breach term [{}] has been replaced successfully.", termName);
+                            logger.info("The breach term [{}] has been replaced successfully.",
+                                    ANSI_GREEN + termName + ANSI_RESET);
+//                            System.out.println("行为名称为" + value + "的普通条款替换成功！");
                         }
                     }
                 }
             }
         });
+        logger.info("End the coverage rule check.");
 
     }
 
@@ -215,6 +246,12 @@ public class Analyzer {
      */
     private static void checkBindRule(Convention convention, Contract contract, String contractMappingFile, Contract newContract) throws BindException {
         List<BindClause> bindClauses = convention.getBindClauses();
+        logger.info("Start the bind constraint rule check.");
+//        logger.warn("Detected a restriction on the contract attribute [{}renantBail{}] : renantBail <= rental",ANSI_RED, ANSI_RESET);
+//        logger.info("The contract attribute [{}renantBail{}] is modified from the initial value of [{}4000RMB{}] to the required value of [{}2000RMB{}]",
+//                ANSI_RED, ANSI_RESET,
+//                ANSI_RED, ANSI_RESET,
+//                ANSI_RED, ANSI_RESET);
         for (BindClause bindClause : bindClauses) {
             // 检查限制要素约束条件 eg. Good NOT_IN ProhibitedItems = [Firearms, Drugs, StolenGoods, HumanOrgans]
             List<AndExpression> andExpressions = bindClause.getFactorBinds().getAndExpression();
@@ -234,16 +271,21 @@ public class Analyzer {
                     if (!ifNotIn) {
                         boolean isContains = itemLimitationsSet.contains(mappingText);
                         if (isContains) {
+//                            logger.error("Contract factor [{}] are illegal,Terminate the inspection process!", mappingText);
+                            logger.error("Contract factor [{}] are illegal,terminate the inspection process!",
+                                    ANSI_RED + mappingText + ANSI_RESET);
                             throw new BindException(mappingText + " should not be on the " + itemLimitationName + " list.");
                         }
                     } else { // 约束关键字为 IN ,私约要素 需要是限制列表中的内容
                         boolean isContains = itemLimitationsSet.contains(mappingText);
                         if (!isContains) {
+                            logger.error("Contract factor [{}] are illegal,Terminate the inspection process!", mappingText);
                             throw new BindException(mappingText + " should be on the " + itemLimitationName + " list.");
                         }
                     }
                 }
             }
+
 
             // 检查表达式是否符合规范  eg. downPayment <= price * 20
             List<OrExpression> childExpressions = bindClause.getChildExpression();
@@ -278,13 +320,14 @@ public class Analyzer {
                                         throw new RuntimeException(e);
                                     }*/
                                 }
-                                System.out.println("私约属性满足公约属性约束！");
+//                                System.out.println("私约属性满足公约属性约束！");
                             }
                         }
                     });
                 }
             }
         }
+        logger.info("End the bind constraint rule check.");
     }
 
     /**

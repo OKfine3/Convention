@@ -498,26 +498,47 @@ public interface SpescListener extends ParseTreeListener {
 	 */
 	void exitBoundedTimePredicate(SpescParser.BoundedTimePredicateContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SpescParser#timeConstant}.
-	 * @param ctx the parse tree
-	 */
-	void enterTimeConstant(SpescParser.TimeConstantContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#timeConstant}.
-	 * @param ctx the parse tree
-	 */
-	void exitTimeConstant(SpescParser.TimeConstantContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SpescParser#timeConstantUnit}.
-	 * @param ctx the parse tree
-	 */
-	void enterTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#timeConstantUnit}.
-	 * @param ctx the parse tree
-	 */
-	void exitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx);
-	/**
+     * Enter a parse tree produced by {@link SpescParser#timeConstant}.
+     * @param ctx the parse tree
+     */
+    void enterTimeConstant(SpescParser.TimeConstantContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#timeConstant}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitTimeConstant(SpescParser.TimeConstantContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#attribute}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterAttribute(SpescParser.AttributeContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#attribute}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitAttribute(SpescParser.AttributeContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#timeConstantUnit}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#timeConstantUnit}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx);
+
+    /**
 	 * Enter a parse tree produced by {@link SpescParser#timePointExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -1127,20 +1148,26 @@ public interface SpescListener extends ParseTreeListener {
 	/**
 	 * Exit a parse tree produced by {@link SpescParser#lawSource}.
 	 * @param ctx the parse tree
-	 */
-	void exitLawSource(SpescParser.LawSourceContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SpescParser#accordTo}.
-	 * @param ctx the parse tree
-	 */
-	void enterAccordTo(SpescParser.AccordToContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#accordTo}.
-	 * @param ctx the parse tree
-	 */
-	void exitAccordTo(SpescParser.AccordToContext ctx);
-	/**
+     */
+    void exitLawSource(SpescParser.LawSourceContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#accordTo}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterAccordTo(SpescParser.AccordToContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#accordTo}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitAccordTo(SpescParser.AccordToContext ctx);
+
+    /**
      * Enter a parse tree produced by {@link SpescParser#rightOf}.
+     *
      * @param ctx the parse tree
      */
     void enterRightOf(SpescParser.RightOfContext ctx);
@@ -1217,16 +1244,20 @@ public interface SpescListener extends ParseTreeListener {
 
     /**
      * Exit a parse tree produced by {@link SpescParser#impldeclaration}.
+     *
      * @param ctx the parse tree
-	 */
-	void exitImpldeclaration(SpescParser.ImpldeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SpescParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void enterValue(SpescParser.ValueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SpescParser#value}.
+     */
+    void exitImpldeclaration(SpescParser.ImpldeclarationContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link SpescParser#value}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterValue(SpescParser.ValueContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link SpescParser#value}.
 	 * @param ctx the parse tree
 	 */
 	void exitValue(SpescParser.ValueContext ctx);

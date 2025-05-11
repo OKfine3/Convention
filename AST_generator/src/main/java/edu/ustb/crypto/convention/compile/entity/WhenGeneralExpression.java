@@ -16,6 +16,9 @@ public class WhenGeneralExpression {
     // 是否存在within
     Boolean ifWithIn = Boolean.FALSE;
     String ruleINTEGER;
+
+    String timeConstant;
+
     String timeConstantUnit;
     // 是否是标识已执行某动作，否：则表示这个表达式为判断时间
     Boolean ifAction = Boolean.FALSE;
@@ -38,7 +41,7 @@ public class WhenGeneralExpression {
         if(ifWithIn){
             res.append("within");
             res.append(this.separator);
-            res.append(ruleINTEGER);
+            res.append(timeConstant);
             res.append(this.separator);
             res.append(timeConstantUnit);
             res.append(this.separator);

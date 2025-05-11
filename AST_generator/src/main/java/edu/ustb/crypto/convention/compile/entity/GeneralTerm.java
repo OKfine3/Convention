@@ -40,7 +40,7 @@ public class GeneralTerm extends Term {
         res.append(actionName);
 
         if (parameterList != null) {
-            res.append("(");
+//            res.append("(");
 
             String prams = "";
             for (String s : parameterList) {
@@ -53,7 +53,7 @@ public class GeneralTerm extends Term {
 
             res.append(prams);
 
-            res.append(")");
+//            res.append(")");
         }
         res.append(_n);
         if (whenStatement != null) {

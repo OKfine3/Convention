@@ -1,0 +1,27 @@
+Landlord:
+  - account: 001
+  - name: Alice
+Tenant:
+  - account: 002
+  - name: Bob
+House:
+  - location: Address
+  - area: Integer
+  - usage: String
+addition:
+  - renterBail: 1000RMB
+  - renantBail: 2000RMB
+  - rental: 2000RMB
+  - startLeasingTime: 2025-01-01
+  - rentDuration: 1
+  - endLeasingTime: Date
+  - payDate: Date
+  - payDuration: 7
+action:
+  - registerHouse: null
+  - confirmLease: null
+  - transferHouse: null
+  - payRent: null
+  - returnHouse: null
+  - checkHouse: null
+  - collectBail: null

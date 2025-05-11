@@ -301,26 +301,40 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
 	/**
 	 * Visit a parse tree produced by {@link SpescParser#boundedTimePredicate}.
 	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoundedTimePredicate(SpescParser.BoundedTimePredicateContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#timeConstant}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTimeConstant(SpescParser.TimeConstantContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#timeConstantUnit}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#timePointExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
+     * @return the visitor result
+     */
+    T visitBoundedTimePredicate(SpescParser.BoundedTimePredicateContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#timeConstant}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitTimeConstant(SpescParser.TimeConstantContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#attribute}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitAttribute(SpescParser.AttributeContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#timeConstantUnit}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitTimeConstantUnit(SpescParser.TimeConstantUnitContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#timePointExpression}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
 	T visitTimePointExpression(SpescParser.TimePointExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SpescParser#actionEnforcedTimeQuery}.
@@ -672,19 +686,23 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
 	T visitRightObject(SpescParser.RightObjectContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SpescParser#onTheObject}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOnTheObject(SpescParser.OnTheObjectContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#lawSource}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLawSource(SpescParser.LawSourceContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#accordTo}.
-	 * @param ctx the parse tree
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitOnTheObject(SpescParser.OnTheObjectContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#lawSource}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitLawSource(SpescParser.LawSourceContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#accordTo}.
+     *
+     * @param ctx the parse tree
      * @return the visitor result
      */
     T visitAccordTo(SpescParser.AccordToContext ctx);
@@ -743,15 +761,18 @@ public interface SpescVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-	T visitValue(SpescParser.ValueContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#index}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIndex(SpescParser.IndexContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SpescParser#decimal}.
+    T visitValue(SpescParser.ValueContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#index}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitIndex(SpescParser.IndexContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link SpescParser#decimal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */

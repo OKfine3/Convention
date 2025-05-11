@@ -1,0 +1,80 @@
+contract LeaseContract constraint_by LeaseConvention{
+
+    @@出租人
+    party Landlord{
+        account:001
+        name:Alice
+    }
+
+    @@承租人
+    party Tenant{
+        account:002
+        name:Bob
+    }
+
+    @@标的物：房屋
+    asset House{
+        location: Address
+        area: Integer
+        usage: String
+    }
+
+    addition infos{
+        renterBail: 1000RMB
+        _renantBail: 2000RMB
+        rental: 2000RMB
+        startLeasingTime: 2025-01-01
+        rentDuration:1
+        endLeasingTime: Date
+        payDate: Date
+        payDuration: 7
+    }
+
+    @@条款1：出租人可通过交纳出租人押金来注册房屋信息，开始出租。
+    term no1: Landlord can registerHouse
+
+    @@条款2：承租人可在出租人注册房屋之后，通过交纳承租人押金来确认租赁，动作执行之后要求自动记录当前时间为合约的开始时间、且计算截止时间并设置合约执行有效期和承租人支付租金的时间。
+    term no2:Tenant can confirmLease
+        when after Landlord did registerHouse
+        while deposit tenantBail
+        where startLeasingTime = now and endLeasingTime = rentDuration + now  and payDate = payDuration + now
+
+     @@条款3:承租人确认承租7天内，出租人必须将房屋使用权转移给承租人。
+    term no3:Landlord must transferHouse
+      when within 7 day after Tenant did confirmLease
+      while deposit $useRight
+
+    @@条款4：在承租人确认承租后，在规定的支付租金日期之前，承租人必须支付租金。
+    term no4:Tenant must payRent
+        when before payDate and after Landlord did transferHouse
+        while deposit rental
+
+    @@条款5：租赁合约到期后且承租人检查房租之前，承租人应归还房屋，即将房屋使用权转回出租人。
+    term no5:Tenant must returnHouse
+      when after endLeasingTime and before Landlord did checkHouse
+      while transfer $useRight to Landlord
+
+    @@条款6：出租人在承租人确认归还房屋后可对房屋进行检查。
+    term no6:Landlord can checkHouse
+        when after Tenant did returnHouse
+
+    @@条款7：在检查房屋之后的15天内，出租人可取出出租人押金。
+    term no7:Landlord can collectBail
+        when within 15 day after Landlord did checkHouse
+        while withdraw renterBail
+
+
+
+    signature of party Landlord
+    {
+      printedName : Alice,
+      signature: 2343214,
+      date: 2025/01/01
+    }
+
+    signature of party Tenant
+    {
+      printedName : Bob,
+      signature : 2343214,
+      date : 2025/01/01
+    }

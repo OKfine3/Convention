@@ -32,8 +32,14 @@ public class WhileGeneralExpression {
             res.append(separator);
             res.append(transferSeparator);
             res.append(toTarget);
-        }else if(isDeposit){
-            // TODO
+        }else if (isDeposit) {
+            res.append("deposit");
+            res.append(separator);
+            res.append(moneyExpressionContext.getText());
+        } else if (isWithdraw) {
+            res.append("withdraw");
+            res.append(separator);
+            res.append(moneyExpressionContext.getText());
         }
 
         return res.toString();

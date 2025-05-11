@@ -1,0 +1,109 @@
+convention LeaseConvention{
+    @@出租人
+    party Leaser{
+        name:String
+        account:Integer
+    }
+
+    @@承租人
+    party Lessee{
+        name:String
+        account:Integer
+    }
+
+    @@租赁物
+    asset Goods{
+        rent:Money
+        amount:Integer
+        usage:String
+    }
+
+    addition infos{  startLeasingTime:Date
+        leasingDuration:Date
+        endLeasingTime:Date
+        leasingDeposit:Money
+        rentalDeposit:Money
+        deliveryDeadline:Date
+        rentDueDate:Date
+        refundDepositPeriod:Date
+        penalty:Money
+        overdueUsageFee :Money
+    }
+
+    legalRight of ownershipRight under Art240:
+        Leaser possess the right including [possessRight, useRight, usufructRight, desposeRight]
+        on the object including [immoAvableProperty, movableProperty]
+        according to [Civil_Code_of_the_Peoples_Republic_of_China]
+
+    legalRight of leaseholdRight under Art703:
+        Lesser possess the right including [possessRight, useRight, residenceRight]
+        on the object including [immoAvableProperty, movableProperty]
+        according to [Civil_Code_of_the_Peoples_Republic_of_China]
+
+    @@条款1: 租赁期限不得超过20年，超过部分无效 房屋租赁押金一般不超过一个月租金 租赁物不能是违禁物品
+    bind clause no1:
+       leasingDuration <= 20
+       Goods NOT_IN ProhibitedItems = [Firearms, IllegalDrugs, StolenGoods, ProtectedAnimals]
+
+    @@条款2：出租人可以向平台存入出租押金表示开始出租租赁物
+    clause no2:Leaser can exercise right rentGoods
+        while deposit leasingDeposit
+
+     @@条款3:在出租人开始出租后，承租人可以支付押金表示确认租赁，并且记录当前时间为开始租赁时间，租赁物租金和支付租金时间生效
+    clause no3:Lesse can exercise right confirmLease
+        when after Leaser did rentGoods
+        while deposit rentalDeposit
+        where startLeasingTime = now and endLeasingTime = leasingDuration + startLeasingTime
+
+    @@条款4：出租人在承租人确定租赁后的交付截止日期内交付租赁物
+    clause no4:Leaser must fulfil obligation deliverGoods
+        when after lesser did confirmLease and before deliveryDeadline
+        while transfer $leaseholdRight to Lesser
+
+    @@条款5：在出租人交付租赁物后，在规定的支付租金日期之前，承租人必须支付租金。
+    clause no5:Lessee must fulfil obligation payRent
+        when after Leaser did deliverGoods and before rentDueDate
+        while deposit rental
+
+    @@条款6：承租人在租赁合约到期后归还租赁物
+    clause no6:Lessee must fulfil obligation returnLeaseGoods
+        when after endLeasingTime
+        while transfer leaseholdRight to Leaser
+
+    @@条款7：出租人在承租人归还租赁物后一定时间内退还押金
+    clause no7:Leaser must fulfil obligation refundDeposit
+        when within refundDepositPeriod after Lessee did returnLeaseGoods
+        while transfer rentalDeposit to Lessee
+
+    @@条款8：出租人在退还押金后的约定期限内，可以取出出租押金
+    clause no8:Leaser can exercise right withdrawDeposit
+        when after leaser did refundDeposit
+        while transfer leasingDeposit to Leaser
+
+    @@违约条款9：出租人没有按时交付租赁物，需要赔偿违约金给承租人
+    breach clause no9 against clause no4:Leaser must fulfil obligation compensateLessee
+        when after deliveryDeadline
+        while transfer penalty to Lessee
+
+    @@违约条款10：承租人没有按时缴纳租金，需要缴纳违约金
+    breach clause no10 against clause no5:Lessee must fulfil obligation payOverdueRent
+        when after  rentDueDate
+        while transfer penalty to Leaser
+
+    @@违约条款11：承租人在合约到期后没有归还租赁物，需要支付逾期占用费用
+    breach clause no11 against clause no6:Lessee must fulfil obligation payOverdueUsage
+        when after endLeasingTime
+        while transfer overdueUsageFee to Leaser
+
+    @@违约条款12：出租人在规定时间内没有退还押金，需要赔偿违约金和押金给承租人
+    breach clause no12 against clause no7:
+      Leaser must fulfil obligation compensateOverdueDeposit
+        when refundDepositPeriod after Lessee did returnLeaseGoods
+        while transfer penalty to Lessee and transfer rentalDeposit to Lessee
+
+    implement declaration{
+        Enacting Agency:Beijing,
+        Enactment Date:2024-01-01 00:00:00,
+        Implementation Date:2024-01-02  00:00:00
+    }
+}

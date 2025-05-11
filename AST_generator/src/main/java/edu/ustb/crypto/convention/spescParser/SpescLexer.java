@@ -11,11 +11,13 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
 public class SpescLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
+    static {
+        RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION);
+    }
 
-	protected static final DFA[] _decisionToDFA;
-	protected static final PredictionContextCache _sharedContextCache =
-		new PredictionContextCache();
+    protected static final DFA[] _decisionToDFA;
+    protected static final PredictionContextCache _sharedContextCache =
+            new PredictionContextCache();
     public static final int
             T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, T__7 = 8, T__8 = 9,
             T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, T__14 = 15, T__15 = 16, T__16 = 17,
@@ -65,11 +67,12 @@ public class SpescLexer extends Lexer {
                 "DETAILS", "CONSTRAINT_BY", "INCLUDING", "UNDER", "INDEX", "CHINESE",
                 "WS", "RULE_STRING", "NUMBER", "IDENTIFIER", "NOTE", "PUNCTUATION", "ESC"
         };
-	}
-	public static final String[] ruleNames = makeRuleNames();
+    }
 
-	private static String[] makeLiteralNames() {
-		return new String[]{
+    public static final String[] ruleNames = makeRuleNames();
+
+    private static String[] makeLiteralNames() {
+        return new String[]{
                 null, "','", "'serial'", "'number'", "'0x'", "'{'", "'}'", "'='", "'against'",
                 "'and'", "'arbitration term :'", "'administered by'", "'institution'",
                 "'printedName'", "'date'", "'('", "')'", "'join'", "'or'", "'||'", "'&&'",
@@ -89,10 +92,10 @@ public class SpescLexer extends Lexer {
                 "'before'", "'belongsTo'", "'within'", "'of'", "'implement'", "'declaration'",
                 null, "'constraint_by'", "'including'", "'under'"
         };
-	}
+    }
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
-		return new String[]{
+        return new String[]{
                 null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null,
@@ -109,7 +112,7 @@ public class SpescLexer extends Lexer {
                 "UNDER", "INDEX", "CHINESE", "WS", "RULE_STRING", "NUMBER", "IDENTIFIER",
                 "NOTE", "PUNCTUATION", "ESC"
         };
-	}
+    }
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -168,7 +171,7 @@ public class SpescLexer extends Lexer {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public static final String _serializedATN =
+    public static final String _serializedATN =
             "\u0004\u0000\u0083\u0435\u0006\uffff\uffff\u0002\u0000\u0007\u0000\u0002" +
                     "\u0001\u0007\u0001\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002" +
                     "\u0004\u0007\u0004\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002" +
@@ -180,16 +183,16 @@ public class SpescLexer extends Lexer {
                     "\u0002\u0018\u0007\u0018\u0002\u0019\u0007\u0019\u0002\u001a\u0007\u001a" +
                     "\u0002\u001b\u0007\u001b\u0002\u001c\u0007\u001c\u0002\u001d\u0007\u001d" +
                     "\u0002\u001e\u0007\u001e\u0002\u001f\u0007\u001f\u0002 \u0007 \u0002!" +
-		"\u0007!\u0002\"\u0007\"\u0002#\u0007#\u0002$\u0007$\u0002%\u0007%\u0002"+
-		"&\u0007&\u0002\'\u0007\'\u0002(\u0007(\u0002)\u0007)\u0002*\u0007*\u0002"+
-		"+\u0007+\u0002,\u0007,\u0002-\u0007-\u0002.\u0007.\u0002/\u0007/\u0002"+
-		"0\u00070\u00021\u00071\u00022\u00072\u00023\u00073\u00024\u00074\u0002"+
-		"5\u00075\u00026\u00076\u00027\u00077\u00028\u00078\u00029\u00079\u0002"+
-		":\u0007:\u0002;\u0007;\u0002<\u0007<\u0002=\u0007=\u0002>\u0007>\u0002"+
-		"?\u0007?\u0002@\u0007@\u0002A\u0007A\u0002B\u0007B\u0002C\u0007C\u0002"+
-		"D\u0007D\u0002E\u0007E\u0002F\u0007F\u0002G\u0007G\u0002H\u0007H\u0002"+
-		"I\u0007I\u0002J\u0007J\u0002K\u0007K\u0002L\u0007L\u0002M\u0007M\u0002"+
-		"N\u0007N\u0002O\u0007O\u0002P\u0007P\u0002Q\u0007Q\u0002R\u0007R\u0002"+
+                    "\u0007!\u0002\"\u0007\"\u0002#\u0007#\u0002$\u0007$\u0002%\u0007%\u0002" +
+                    "&\u0007&\u0002\'\u0007\'\u0002(\u0007(\u0002)\u0007)\u0002*\u0007*\u0002" +
+                    "+\u0007+\u0002,\u0007,\u0002-\u0007-\u0002.\u0007.\u0002/\u0007/\u0002" +
+                    "0\u00070\u00021\u00071\u00022\u00072\u00023\u00073\u00024\u00074\u0002" +
+                    "5\u00075\u00026\u00076\u00027\u00077\u00028\u00078\u00029\u00079\u0002" +
+                    ":\u0007:\u0002;\u0007;\u0002<\u0007<\u0002=\u0007=\u0002>\u0007>\u0002" +
+                    "?\u0007?\u0002@\u0007@\u0002A\u0007A\u0002B\u0007B\u0002C\u0007C\u0002" +
+                    "D\u0007D\u0002E\u0007E\u0002F\u0007F\u0002G\u0007G\u0002H\u0007H\u0002" +
+                    "I\u0007I\u0002J\u0007J\u0002K\u0007K\u0002L\u0007L\u0002M\u0007M\u0002" +
+                    "N\u0007N\u0002O\u0007O\u0002P\u0007P\u0002Q\u0007Q\u0002R\u0007R\u0002" +
                     "S\u0007S\u0002T\u0007T\u0002U\u0007U\u0002V\u0007V\u0002W\u0007W\u0002" +
                     "X\u0007X\u0002Y\u0007Y\u0002Z\u0007Z\u0002[\u0007[\u0002\\\u0007\\\u0002" +
                     "]\u0007]\u0002^\u0007^\u0002_\u0007_\u0002`\u0007`\u0002a\u0007a\u0002" +
@@ -320,16 +323,16 @@ public class SpescLexer extends Lexer {
                     "\u0000\u0000\u0000!\u0001\u0000\u0000\u0000\u0000#\u0001\u0000\u0000\u0000" +
                     "\u0000%\u0001\u0000\u0000\u0000\u0000\'\u0001\u0000\u0000\u0000\u0000" +
                     ")\u0001\u0000\u0000\u0000\u0000+\u0001\u0000\u0000\u0000\u0000-\u0001" +
-		"\u0000\u0000\u0000\u0000/\u0001\u0000\u0000\u0000\u00001\u0001\u0000\u0000"+
-		"\u0000\u00003\u0001\u0000\u0000\u0000\u00005\u0001\u0000\u0000\u0000\u0000"+
-		"7\u0001\u0000\u0000\u0000\u00009\u0001\u0000\u0000\u0000\u0000;\u0001"+
-		"\u0000\u0000\u0000\u0000=\u0001\u0000\u0000\u0000\u0000?\u0001\u0000\u0000"+
-		"\u0000\u0000A\u0001\u0000\u0000\u0000\u0000C\u0001\u0000\u0000\u0000\u0000"+
-		"E\u0001\u0000\u0000\u0000\u0000G\u0001\u0000\u0000\u0000\u0000I\u0001"+
-		"\u0000\u0000\u0000\u0000K\u0001\u0000\u0000\u0000\u0000M\u0001\u0000\u0000"+
-		"\u0000\u0000O\u0001\u0000\u0000\u0000\u0000Q\u0001\u0000\u0000\u0000\u0000"+
-		"S\u0001\u0000\u0000\u0000\u0000U\u0001\u0000\u0000\u0000\u0000W\u0001"+
-		"\u0000\u0000\u0000\u0000Y\u0001\u0000\u0000\u0000\u0000[\u0001\u0000\u0000"+
+                    "\u0000\u0000\u0000\u0000/\u0001\u0000\u0000\u0000\u00001\u0001\u0000\u0000" +
+                    "\u0000\u00003\u0001\u0000\u0000\u0000\u00005\u0001\u0000\u0000\u0000\u0000" +
+                    "7\u0001\u0000\u0000\u0000\u00009\u0001\u0000\u0000\u0000\u0000;\u0001" +
+                    "\u0000\u0000\u0000\u0000=\u0001\u0000\u0000\u0000\u0000?\u0001\u0000\u0000" +
+                    "\u0000\u0000A\u0001\u0000\u0000\u0000\u0000C\u0001\u0000\u0000\u0000\u0000" +
+                    "E\u0001\u0000\u0000\u0000\u0000G\u0001\u0000\u0000\u0000\u0000I\u0001" +
+                    "\u0000\u0000\u0000\u0000K\u0001\u0000\u0000\u0000\u0000M\u0001\u0000\u0000" +
+                    "\u0000\u0000O\u0001\u0000\u0000\u0000\u0000Q\u0001\u0000\u0000\u0000\u0000" +
+                    "S\u0001\u0000\u0000\u0000\u0000U\u0001\u0000\u0000\u0000\u0000W\u0001" +
+                    "\u0000\u0000\u0000\u0000Y\u0001\u0000\u0000\u0000\u0000[\u0001\u0000\u0000" +
 		"\u0000\u0000]\u0001\u0000\u0000\u0000\u0000_\u0001\u0000\u0000\u0000\u0000"+
 		"a\u0001\u0000\u0000\u0000\u0000c\u0001\u0000\u0000\u0000\u0000e\u0001"+
 		"\u0000\u0000\u0000\u0000g\u0001\u0000\u0000\u0000\u0000i\u0001\u0000\u0000"+
@@ -351,16 +354,16 @@ public class SpescLexer extends Lexer {
 		"\u0001\u0000\u0000\u0000\u0000\u00ab\u0001\u0000\u0000\u0000\u0000\u00ad"+
 		"\u0001\u0000\u0000\u0000\u0000\u00af\u0001\u0000\u0000\u0000\u0000\u00b1"+
 		"\u0001\u0000\u0000\u0000\u0000\u00b3\u0001\u0000\u0000\u0000\u0000\u00b5"+
-		"\u0001\u0000\u0000\u0000\u0000\u00b7\u0001\u0000\u0000\u0000\u0000\u00b9"+
-		"\u0001\u0000\u0000\u0000\u0000\u00bb\u0001\u0000\u0000\u0000\u0000\u00bd"+
-		"\u0001\u0000\u0000\u0000\u0000\u00bf\u0001\u0000\u0000\u0000\u0000\u00c1"+
-		"\u0001\u0000\u0000\u0000\u0000\u00c3\u0001\u0000\u0000\u0000\u0000\u00c5"+
-		"\u0001\u0000\u0000\u0000\u0000\u00c7\u0001\u0000\u0000\u0000\u0000\u00c9"+
-		"\u0001\u0000\u0000\u0000\u0000\u00cb\u0001\u0000\u0000\u0000\u0000\u00cd"+
-		"\u0001\u0000\u0000\u0000\u0000\u00cf\u0001\u0000\u0000\u0000\u0000\u00d1"+
-		"\u0001\u0000\u0000\u0000\u0000\u00d3\u0001\u0000\u0000\u0000\u0000\u00d5"+
-		"\u0001\u0000\u0000\u0000\u0000\u00d7\u0001\u0000\u0000\u0000\u0000\u00d9"+
-		"\u0001\u0000\u0000\u0000\u0000\u00db\u0001\u0000\u0000\u0000\u0000\u00dd"+
+                    "\u0001\u0000\u0000\u0000\u0000\u00b7\u0001\u0000\u0000\u0000\u0000\u00b9" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00bb\u0001\u0000\u0000\u0000\u0000\u00bd" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00bf\u0001\u0000\u0000\u0000\u0000\u00c1" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00c3\u0001\u0000\u0000\u0000\u0000\u00c5" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00c7\u0001\u0000\u0000\u0000\u0000\u00c9" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00cb\u0001\u0000\u0000\u0000\u0000\u00cd" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00cf\u0001\u0000\u0000\u0000\u0000\u00d1" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00d3\u0001\u0000\u0000\u0000\u0000\u00d5" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00d7\u0001\u0000\u0000\u0000\u0000\u00d9" +
+                    "\u0001\u0000\u0000\u0000\u0000\u00db\u0001\u0000\u0000\u0000\u0000\u00dd" +
                     "\u0001\u0000\u0000\u0000\u0000\u00df\u0001\u0000\u0000\u0000\u0000\u00e1" +
                     "\u0001\u0000\u0000\u0000\u0000\u00e3\u0001\u0000\u0000\u0000\u0000\u00e5" +
                     "\u0001\u0000\u0000\u0000\u0000\u00e7\u0001\u0000\u0000\u0000\u0000\u00e9" +
@@ -803,10 +806,11 @@ public class SpescLexer extends Lexer {
                     "\u042b\u0433\u0001\u0006\u0000\u0000";
     public static final ATN _ATN =
             new ATNDeserializer().deserialize(_serializedATN.toCharArray());
-	static {
-		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
-		for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
-			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
-		}
-	}
+
+    static {
+        _decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
+        for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
+            _decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
+        }
+    }
 }

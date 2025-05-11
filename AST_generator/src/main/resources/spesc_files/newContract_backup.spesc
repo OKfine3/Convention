@@ -40,7 +40,7 @@ contract SaleAndBuyContract constraint_by SaleAndBuyConvention{
 		while transfer $meatRight to Buyer
 
 	term no4 : Buyer must payBalance()
-		when within 10day day after Seller did deliverMeat
+		when within 10 day after Seller did deliverMeat
 		while transfer (1-payRate)*price to Seller
 
 	term no5 : Buyer can requireRefund

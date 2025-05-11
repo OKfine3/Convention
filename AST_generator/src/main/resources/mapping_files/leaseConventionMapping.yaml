@@ -1,0 +1,28 @@
+party:
+  - Leaser: null
+  - Lessee: null
+asset:
+  - Goods: null
+attribute:
+  - startLeasingTime: null
+  - leasingDuration: null
+  - endLeasingTime: null
+  - leasingDeposit: null
+  - rentalDeposit: null
+  - deliveryDeadline: null
+  - rentDueDate: null
+  - refundDepositPeriod: null
+  - penalty: null
+  - overdueUsageFee: null
+action:
+  - rentGoods: null
+  - confirmLease: null
+  - deliverGoods: null
+  - payRent: null
+  - returnLeaseGoods: null
+  - refundDeposit: null
+  - withdrawDeposit: null
+  - compensateLessee: null
+  - payOverdueRent: null
+  - payOverdueUsage: null
+  - compensateOverdueDeposit: null

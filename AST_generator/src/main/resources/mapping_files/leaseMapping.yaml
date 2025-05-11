@@ -1,0 +1,28 @@
+party:
+  - Leaser: landord
+  - Lessee: Tenant
+asset:
+  - Goods: IllegalDrugs
+attribute:
+  - startLeasingTime: startLeasingTime
+  - leasingDuration: rentDuration
+  - endLeasingTime: endLeasingTime
+  - leasingDeposit: renterBail
+  - rentalDeposit: renantBail
+  - deliveryDeadline: null
+  - rentDueDate: payDate
+  - refundDepositPeriod: null
+  - penalty: null
+  - overdueUsageFee: null
+action:
+  - rentGoods: registerHouse
+  - confirmLease: confirmLease
+  - deliverGoods: transferHouse
+  - payRent: payRent
+  - returnLeaseGoods: returnHouse
+  - refundDeposit: REQUIRE
+  - withdrawDeposit: collectBail
+  - compensateLessee: REQUIRE
+  - payOverdueRent: REQUIRE
+  - payOverdueUsage: null
+  - compensateOverdueDeposit: REQUIRE
